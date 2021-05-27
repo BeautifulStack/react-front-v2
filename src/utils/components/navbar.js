@@ -1,42 +1,56 @@
-import { NavLink, useHistory } from 'react-router-dom'
+import { useState } from 'react'
+import { NavLink, useHistory, useLocation } from 'react-router-dom'
 import { Input, Icon, Button } from 'semantic-ui-react'
 
 export const NavBar = () => {
     const history = useHistory()
+    const location = useLocation()
+
+    const [search, setSearch] = useState('')
+
+    const submitSearch = () => {
+        history.push('/search/' + search)
+    }
 
     return (
         <div>
             <div className='navbar'>
-                <NavLink
-                    to='/'
-                    style={{
-                        width: '10%',
-                        fontSize: '24px',
-                        fontStyle: 'italic',
-                        color: '#eaae00',
-                    }}
-                >
+                <Button className='close-cross'>X</Button>
+                <NavLink to='/' className='title'>
                     FairRepack
                 </NavLink>
                 <Input
-                    loading
+                    icon={<Icon name='search' link onClick={submitSearch} />}
                     placeholder='Search...'
-                    style={{ width: '50%', fontSize: '18px' }}
-                />
-                <div
-                    style={{
-                        width: '5%',
-                        display: 'flex',
-                        justifyContent: 'space-between',
+                    className='input-navbar'
+                    value={search}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') submitSearch()
                     }}
-                >
+                    onChange={(e) => setSearch(e.target.value)}
+                />
+                <div className='account-management'>
+                    <Icon
+                        style={{ cursor: 'pointer' }}
+                        size='large'
+                        name='send'
+                        onClick={() => history.push('/sell')}
+                    />
+                    <Icon
+                        style={{ cursor: 'pointer' }}
+                        size='large'
+                        name='unordered list'
+                        onClick={() => history.push('/order')}
+                    />
                     <Icon
                         style={{ cursor: 'pointer' }}
                         size='large'
                         name='circle outline'
                         onClick={() => history.push('/account')}
                     />
+
                     <Icon
+                        className='notification'
                         style={{ cursor: 'pointer' }}
                         size='large'
                         name='shopping cart'
@@ -45,16 +59,51 @@ export const NavBar = () => {
                 </div>
             </div>
             <div className='shop-selector'>
-                <Button
-                    color='yellow'
-                    style={{ display: 'flex', alignItems: 'center' }}
-                >
-                    <Icon size='large' name='circle outline' />
-                    <span>Home</span>
-                </Button>
-                <Button content='All Products' />
-                <Button content='Associations' />
-                <Button content='Shop' />
+                <NavLink to='/home'>
+                    <Button
+                        color={location.pathname === '/home' ? 'yellow' : ''}
+                        style={{ display: 'flex', alignItems: 'center' }}
+                    >
+                        <Icon size='large' name='home' />
+                        <span>Home</span>
+                    </Button>
+                </NavLink>
+                <NavLink to='/products'>
+                    <Button
+                        color={
+                            location.pathname.includes('/products') ||
+                            location.pathname.includes('/search')
+                                ? 'yellow'
+                                : ''
+                        }
+                        style={{ display: 'flex', alignItems: 'center' }}
+                    >
+                        <Icon size='large' name='box' />
+                        <span>All Products</span>
+                    </Button>
+                </NavLink>
+                <NavLink to='/associations'>
+                    <Button
+                        color={
+                            location.pathname === '/associations'
+                                ? 'yellow'
+                                : ''
+                        }
+                        style={{ display: 'flex', alignItems: 'center' }}
+                    >
+                        <Icon size='large' name='tree' />
+                        <span>Associations</span>
+                    </Button>
+                </NavLink>
+                <NavLink to='/shop'>
+                    <Button
+                        color={location.pathname === '/shop' ? 'yellow' : ''}
+                        style={{ display: 'flex', alignItems: 'center' }}
+                    >
+                        <Icon size='large' name='shopping basket' />
+                        <span>Shop</span>
+                    </Button>
+                </NavLink>
             </div>
         </div>
     )

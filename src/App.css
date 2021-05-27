@@ -62,6 +62,7 @@
 }
 
 .news {
+  overflow: hidden;
   height: 300px;
   width: 100%;
     display: flex;
@@ -71,7 +72,8 @@
 .news-brick {
   border-radius: 5px;
   background-size: 100%;
-  width: 50%;
+  min-width: 50%;
+  max-width: 50%;
   height: 80%;
   margin: auto 2em;
   padding: 3em;
@@ -120,9 +122,142 @@
 .Box:hover {
   transition: 0.5s ease;
   background-color: rgba(255, 255, 255, 1 );
-  border: 1px dashed rgba(0, 0, 0, 0.5);
+  border: 1px dashed #eaae00;
 }
 
 .category > span {
   font-size: 24px;
+}
+
+.active > * {
+  background-color: #eaae00;
+}
+
+.productsPage {
+  margin: 1em 8em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.productBox {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  margin: 1em;
+  padding: 1em;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.05);
+  height: 200px;
+  width: 200px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notification {
+  position: relative;
+}
+
+.notification::after {
+  top: -4px;
+  right: -4px;
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: red;
+  position: absolute;
+}
+
+.sliderClicker {
+  cursor: pointer;
+  height: 6px;
+  width: 30px;
+  background-color: lightgrey;
+  border-radius: 5px;
+  margin: .5em 1em;
+}
+
+.sliderClicker:hover {
+  background-color: grey;
+}
+
+.productContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.title {
+  width: 10%;
+  font-size: 24px;
+  font-style: 'italic';
+  color: #eaae00;
+  margin-bottom: .5em;
+}
+
+.account-management {
+  width: 10%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-navbar {
+  width: 50%;
+  font-size: 18px;
+}
+
+.close-cross {
+  display:none !important;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+@media (max-width: 500px) {
+  .navbar {
+    width: 100vw;
+    padding: 1em;
+    margin: 0;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .title {
+    width: 80%;
+  }
+
+  .input-navbar {
+    width: 80%;
+  }
+
+  .shop-selector {
+    width: 100vw;
+    padding: 1em;
+    overflow-x: scroll;
+  }
+
+  .account-management {
+    margin-top: 1em;
+    width: 80%;
+  }
+  .productsPage {
+    margin: 0;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .productContainer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .productBox {
+    width: 80vw;
+    height: 80vw;
+  }
+
+  .close-cross {
+    display: block !important;
+  }
 }
