@@ -1,6 +1,9 @@
 .App {
   text-align: center;
 }
+* {
+  box-sizing: border-box;
+}
 
 .App-logo {
   height: 40vmin;
@@ -35,4 +38,91 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.navbar {
+  width: 100%;
+  display: flex;
+  padding: 3em 8em;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.shop-selector {
+  display: flex;
+  justify-content: flex-start;
+  padding: 2em 8em;
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.news {
+  height: 300px;
+  width: 100%;
+    display: flex;
+  justify-content: flex-start;
+}
+
+.news-brick {
+  border-radius: 5px;
+  background-size: 100%;
+  width: 50%;
+  height: 80%;
+  margin: auto 2em;
+  padding: 3em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between  ;
+  align-items: flex-start;
+}
+
+.news-bricks-title {
+  color: white;
+  font-size: 36px;
+}
+
+.news-bricks-desc {
+  color: white;
+  font-size: 18px;
+}
+
+.news-bricks-button {
+  color: white;
+}
+
+.categoryBrowse {
+  margin: 1em 8em;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+}
+
+.categorySelecter {
+  display: flex;
+}
+
+.Box {
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 2em;
+  margin-right: 1em;
+  background-color: rgba(0, 0, 0, 0.05);
+  transition: 0.5s ease;
+  border: 1px dashed rgba(0, 0, 0, 0.0);
+
+}
+
+.Box:hover {
+  transition: 0.5s ease;
+  background-color: rgba(255, 255, 255, 1 );
+  border: 1px dashed rgba(0, 0, 0, 0.5);
+}
+
+.category > span {
+  font-size: 24px;
 }
