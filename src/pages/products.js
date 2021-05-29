@@ -27,7 +27,6 @@ const ProductBox = ({ id, brand, model, image, description, link }) => {
                 style={{
                     display: 'flex',
                     alignItems: 'center',
-                    zIndex: '1000',
                 }}
                 onClick={(e) => {
                     e.stopPropagation()

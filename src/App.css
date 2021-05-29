@@ -129,7 +129,7 @@
   font-size: 24px;
 }
 
-.active > * {
+a.active:not(.step) > * {
   background-color: #eaae00;
 }
 
@@ -213,6 +213,14 @@
   right: 5px;
 }
 
+.sellsPage {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 1em 8em;
+  align-items: flex-start;
+}
+
 @media (max-width: 500px) {
   .navbar {
     width: 100vw;
@@ -260,4 +268,54 @@
   .close-cross {
     display: block !important;
   }
+}
+
+.newSellPage {
+  margin: 1em 8em;
+  display: flex;
+  justify-content: flex-start;
+  height: 68vh;
+  overflow: hidden;
+}
+
+.newSellWindowWrapper {
+  height: 100%;
+  flex: 1;
+  overflow: hidden;
+  margin: 1em;
+}
+
+.windowSell {
+  height: 100%;
+
+  padding: 1em;
+}
+
+.windowContent {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  margin: 1em;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  padding: 1em;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.windowContent > * {
+  margin: 1em
+}
+
+.fileDisplay {
+  margin: 0 1em;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.fileDisplay > * {
+  padding: .2em .4em;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  margin-right: 1em;
 }

@@ -34,7 +34,7 @@ export const NavBar = () => {
                         style={{ cursor: 'pointer' }}
                         size='large'
                         name='send'
-                        onClick={() => history.push('/sell')}
+                        onClick={() => history.push('/sells')}
                     />
                     <Icon
                         style={{ cursor: 'pointer' }}

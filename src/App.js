@@ -5,6 +5,7 @@ import 'semantic-ui-css/semantic.min.css'
 
 import { Home } from './pages/index'
 import { Products } from './pages/products'
+import { Sells, NewSell } from './pages/sell/index'
 
 function App() {
     return (
@@ -15,7 +16,9 @@ function App() {
                     <Route exact path='/home' component={Home} />
                     <Route exact path='/search/:search' component={Products} />
                     <Route exact path='/products' component={Products} />
-                    <Route exact path='/sell' component={Products} />
+                    <Route exact path='/sells' component={Sells} />
+                    <Route exact path='/sells/new' component={NewSell} />
+
                     <Route path='/' component={Home} />
                 </Switch>
             </BrowserRouter>
