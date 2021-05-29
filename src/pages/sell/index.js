@@ -7,22 +7,141 @@ export const Sells = () => {
 
     return (
         <div className='sellsPage'>
-            <h3>Your Sells</h3>
-            <Button
-                color='yellow'
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                }}
-                onClick={(e) => {
-                    e.stopPropagation()
-                    history.push('/sells/new')
-                }}
-            >
-                <Icon name='add' />
-                <span>New</span>
-            </Button>
-            <span>No sell for the moment</span>
+            <div className='sellsPageSells'>
+                <h3>Your Sells</h3>
+                <Button
+                    color='yellow'
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                    }}
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        history.push('/sells/new')
+                    }}
+                >
+                    <Icon name='add' />
+                    <span>New</span>
+                </Button>
+                <OfferLine
+                    offerId='#1861'
+                    status='accepted'
+                    date='24/05/2015: 16h30'
+                    price='200€'
+                />
+                <OfferLine
+                    offerId='#1861'
+                    status='accepted'
+                    date='24/05/2015: 16h30'
+                    price='200€'
+                />
+                <OfferLine
+                    offerId='#1861'
+                    status='accepted'
+                    date='24/05/2015: 16h30'
+                    price='200€'
+                />
+                <OfferLine
+                    offerId='#1861'
+                    status='accepted'
+                    date='24/05/2015: 16h30'
+                    price='200€'
+                />
+                <span>No sell for the moment</span>
+            </div>
+            <div className='offerResume'>
+                <h3>Offer #1354</h3>
+                <span>24/05/2015: 16h30</span>
+                <span>
+                    <b>Status: </b>Accepted
+                </span>
+                <div className='offerResumeHistory'>
+                    <h5>History: </h5>
+                    <div className='scroller'>
+                        <HistoryLine
+                            status='accepted'
+                            date='24/05/2015: 16h30'
+                            price='200€'
+                        />
+                        <HistoryLine
+                            status='accepted'
+                            date='24/05/2015: 16h30'
+                            price='200€'
+                        />
+                        <HistoryLine
+                            status='accepted'
+                            date='24/05/2015: 16h30'
+                            price='200€'
+                        />
+                        <HistoryLine
+                            status='accepted'
+                            date='24/05/2015: 16h30'
+                            price='200€'
+                        />
+                        <HistoryLine
+                            status='accepted'
+                            date='24/05/2015: 16h30'
+                            price='200€'
+                        />
+                        <HistoryLine
+                            status='accepted'
+                            date='24/05/2015: 16h30'
+                            price='200€'
+                        />
+                        <HistoryLine
+                            status='accepted'
+                            date='24/05/2015: 16h30'
+                            price='200€'
+                        />
+                        <HistoryLine
+                            status='accepted'
+                            date='24/05/2015: 16h30'
+                            price='200€'
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+const OfferLine = ({ offerId, status, date, price }) => {
+    return (
+        <div
+            style={{
+                cursor: 'pointer',
+                alignSelf: 'stretch',
+                display: 'flex',
+                justifyContent: 'space-between',
+                padding: '1em',
+                backgroundColor: 'rgba(0, 0, 0, 0.05)',
+                borderRadius: '5px',
+                margin: '.5em 0',
+            }}
+        >
+            <span>{offerId}</span>
+            <span>{status}</span>
+            <span>{date}</span>
+            <span>{price}</span>
+        </div>
+    )
+}
+
+const HistoryLine = ({ status, date, price }) => {
+    return (
+        <div
+            style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                padding: '1em',
+                backgroundColor: 'rgba(0, 0, 0, 0.05)',
+                borderRadius: '5px',
+                marginBottom: '1em',
+            }}
+        >
+            <span>{status}</span>
+            <span>{date}</span>
+            <span>{price}</span>
         </div>
     )
 }
