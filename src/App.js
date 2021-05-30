@@ -7,6 +7,8 @@ import { Home } from './pages/index'
 import { Products } from './pages/products'
 import { Sells, NewSell } from './pages/sell/index'
 
+import { Cart } from './pages/cart/cart'
+
 function App() {
     return (
         <div className='App'>
@@ -18,7 +20,7 @@ function App() {
                     <Route exact path='/products' component={Products} />
                     <Route exact path='/sells' component={Sells} />
                     <Route exact path='/sells/new' component={NewSell} />
-
+                    <Route exact path='/cart' component={Cart} />
                     <Route path='/' component={Home} />
                 </Switch>
             </BrowserRouter>

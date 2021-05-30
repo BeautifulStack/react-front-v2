@@ -140,6 +140,54 @@ a.active:not(.step) > * {
   align-items: flex-start;
 }
 
+.middle-container {
+  display: flex;
+  align-self: center;
+  margin: 1em;
+}
+
+.left-container {
+  display: flex;
+  align-self: flex-start;
+}
+.right-container {
+  display: flex;
+  align-self: flex-end;
+}
+
+.page-wrapper {
+  margin: 1em 8em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+
+.column-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+}
+
+.styled-container {
+  padding: 1em;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  margin: .5em;
+}
+
+.inline-page-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.inline-page-wrapper > * {
+ flex: 1;
+}
+
 .productBox {
   cursor: pointer;
   display: flex;
@@ -283,6 +331,13 @@ a.active:not(.step) > * {
     width: 80%;
   }
   .productsPage {
+    margin: 0;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .page-wrapper{
     margin: 0;
     width: 100%;
     flex-direction: column;
