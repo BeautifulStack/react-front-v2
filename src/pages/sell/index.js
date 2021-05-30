@@ -1,6 +1,15 @@
-import { useRef, useState, Input } from 'react'
+import { useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Icon, Button, Step, Select, TextArea, Form } from 'semantic-ui-react'
+import {
+    Icon,
+    Button,
+    Step,
+    Select,
+    TextArea,
+    Form,
+    Input,
+} from 'semantic-ui-react'
+import { ColumnWrapper, InlineWrapper } from './../../utils/components/wrapper'
 
 export const Sells = () => {
     const history = useHistory()
@@ -47,7 +56,7 @@ export const Sells = () => {
                     date='24/05/2015: 16h30'
                     price='200€'
                 />
-                <span>No sell for the moment</span>
+                {/* <span>No sell for the moment</span> */}
             </div>
             <div className='offerResume'>
                 <h3>Offer #1354</h3>
@@ -98,10 +107,31 @@ export const Sells = () => {
                             date='24/05/2015: 16h30'
                             price='200€'
                         />
+                        <CounterOffer />
                     </div>
+
+                    <InlineWrapper>
+                        <Button color='yellow'>Accept</Button>{' '}
+                        <Button>Counter Offer</Button>{' '}
+                        <Button color='red'>Deny</Button>
+                    </InlineWrapper>
                 </div>
             </div>
         </div>
+    )
+}
+
+const CounterOffer = () => {
+    return (
+        <ColumnWrapper>
+            <Form style={{ marginBottom: '1em' }}>
+                <TextArea placeholder='Tell us more' />
+            </Form>
+            <InlineWrapper>
+                <Input placeholder='New Price...' />
+                <Button>Send</Button>
+            </InlineWrapper>
+        </ColumnWrapper>
     )
 }
 
