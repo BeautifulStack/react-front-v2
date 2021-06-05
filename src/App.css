@@ -312,6 +312,16 @@ a.active:not(.step) > * {
     align-items: center;
   }
 
+  .inline-page-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .column-page-wrapper {
+    margin: auto .5em;
+  }
+
+
   .title {
     width: 80%;
   }

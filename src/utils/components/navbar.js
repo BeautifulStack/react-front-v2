@@ -95,15 +95,6 @@ export const NavBar = () => {
                         <span>Associations</span>
                     </Button>
                 </NavLink>
-                <NavLink to='/shop'>
-                    <Button
-                        color={location.pathname === '/shop' ? 'yellow' : ''}
-                        style={{ display: 'flex', alignItems: 'center' }}
-                    >
-                        <Icon size='large' name='shopping basket' />
-                        <span>Shop</span>
-                    </Button>
-                </NavLink>
             </div>
         </div>
     )

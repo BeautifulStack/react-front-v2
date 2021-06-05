@@ -9,115 +9,124 @@ import {
     Form,
     Input,
 } from 'semantic-ui-react'
-import { ColumnWrapper, InlineWrapper } from './../../utils/components/wrapper'
+import { StyledContainer } from '../../utils/components/containers'
+import {
+    ColumnWrapper,
+    InlineWrapper,
+    Wrapper,
+} from './../../utils/components/wrapper'
 
 export const Sells = () => {
     const history = useHistory()
 
     return (
-        <div className='sellsPage'>
-            <div className='sellsPageSells'>
-                <h3>Your Sells</h3>
-                <Button
-                    color='yellow'
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                    }}
-                    onClick={(e) => {
-                        e.stopPropagation()
-                        history.push('/sells/new')
-                    }}
-                >
-                    <Icon name='add' />
-                    <span>New</span>
-                </Button>
-                <OfferLine
-                    offerId='#1861'
-                    status='accepted'
-                    date='24/05/2015: 16h30'
-                    price='200€'
-                />
-                <OfferLine
-                    offerId='#1861'
-                    status='accepted'
-                    date='24/05/2015: 16h30'
-                    price='200€'
-                />
-                <OfferLine
-                    offerId='#1861'
-                    status='accepted'
-                    date='24/05/2015: 16h30'
-                    price='200€'
-                />
-                <OfferLine
-                    offerId='#1861'
-                    status='accepted'
-                    date='24/05/2015: 16h30'
-                    price='200€'
-                />
-                {/* <span>No sell for the moment</span> */}
-            </div>
-            <div className='offerResume'>
-                <h3>Offer #1354</h3>
-                <span>24/05/2015: 16h30</span>
-                <span>
-                    <b>Status: </b>Accepted
-                </span>
-                <div className='offerResumeHistory'>
-                    <h5>History: </h5>
-                    <div className='scroller'>
-                        <HistoryLine
-                            status='accepted'
-                            date='24/05/2015: 16h30'
-                            price='200€'
-                        />
-                        <HistoryLine
-                            status='accepted'
-                            date='24/05/2015: 16h30'
-                            price='200€'
-                        />
-                        <HistoryLine
-                            status='accepted'
-                            date='24/05/2015: 16h30'
-                            price='200€'
-                        />
-                        <HistoryLine
-                            status='accepted'
-                            date='24/05/2015: 16h30'
-                            price='200€'
-                        />
-                        <HistoryLine
-                            status='accepted'
-                            date='24/05/2015: 16h30'
-                            price='200€'
-                        />
-                        <HistoryLine
-                            status='accepted'
-                            date='24/05/2015: 16h30'
-                            price='200€'
-                        />
-                        <HistoryLine
-                            status='accepted'
-                            date='24/05/2015: 16h30'
-                            price='200€'
-                        />
-                        <HistoryLine
-                            status='accepted'
-                            date='24/05/2015: 16h30'
-                            price='200€'
-                        />
-                        <CounterOffer />
-                    </div>
+        <Wrapper title='Your Sells'>
+            <InlineWrapper>
+                <ColumnWrapper>
+                    <Button
+                        color='yellow'
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            alignSelf: 'flex-start',
+                        }}
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            history.push('/sells/new')
+                        }}
+                    >
+                        <Icon name='add' />
+                        <span>New</span>
+                    </Button>
+                    <OfferLine
+                        offerId='#1861'
+                        status='accepted'
+                        date='24/05/2015: 16h30'
+                        price='200€'
+                    />
+                    <OfferLine
+                        offerId='#1861'
+                        status='accepted'
+                        date='24/05/2015: 16h30'
+                        price='200€'
+                    />
+                    <OfferLine
+                        offerId='#1861'
+                        status='accepted'
+                        date='24/05/2015: 16h30'
+                        price='200€'
+                    />
+                    <OfferLine
+                        offerId='#1861'
+                        status='accepted'
+                        date='24/05/2015: 16h30'
+                        price='200€'
+                    />
+                    {/* <span>No sell for the moment</span> */}
+                </ColumnWrapper>
+                <StyledContainer>
+                    <ColumnWrapper>
+                        <h3>Offer #1354</h3>
+                        <span>24/05/2015: 16h30</span>
+                        <span>
+                            <b>Status: </b>Accepted
+                        </span>
+                        <div className='offerResumeHistory'>
+                            <h5>History: </h5>
+                            <div className='scroller'>
+                                <HistoryLine
+                                    status='accepted'
+                                    date='24/05/2015: 16h30'
+                                    price='200€'
+                                />
+                                <HistoryLine
+                                    status='accepted'
+                                    date='24/05/2015: 16h30'
+                                    price='200€'
+                                />
+                                <HistoryLine
+                                    status='accepted'
+                                    date='24/05/2015: 16h30'
+                                    price='200€'
+                                />
+                                <HistoryLine
+                                    status='accepted'
+                                    date='24/05/2015: 16h30'
+                                    price='200€'
+                                />
+                                <HistoryLine
+                                    status='accepted'
+                                    date='24/05/2015: 16h30'
+                                    price='200€'
+                                />
+                                <HistoryLine
+                                    status='accepted'
+                                    date='24/05/2015: 16h30'
+                                    price='200€'
+                                />
+                                <HistoryLine
+                                    status='accepted'
+                                    date='24/05/2015: 16h30'
+                                    price='200€'
+                                />
+                                <HistoryLine
+                                    status='accepted'
+                                    date='24/05/2015: 16h30'
+                                    price='200€'
+                                />
+                                <CounterOffer />
+                            </div>
 
-                    <InlineWrapper>
-                        <Button color='yellow'>Accept</Button>{' '}
-                        <Button>Counter Offer</Button>{' '}
-                        <Button color='red'>Deny</Button>
-                    </InlineWrapper>
-                </div>
-            </div>
-        </div>
+                            <InlineWrapper>
+                                <Button color='yellow'>Accept</Button>{' '}
+                                <Button>Counter Offer</Button>{' '}
+                                <Button color='red'>Deny</Button>
+                            </InlineWrapper>
+                        </div>
+                    </ColumnWrapper>
+                </StyledContainer>
+            </InlineWrapper>
+        </Wrapper>
     )
 }
 
