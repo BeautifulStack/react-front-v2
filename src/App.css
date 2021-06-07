@@ -244,9 +244,10 @@ a.active:not(.step) > * {
 }
 
 .account-management {
-  width: 10%;
+  width: 20%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .input-navbar {
@@ -303,7 +304,21 @@ a.active:not(.step) > * {
   overflow: auto;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 1700px) {
+  .account-management {
+    width: 25%;
+
+  }
+}
+
+@media (max-width: 1400px) {
+  .account-management {
+    width: 30%;
+
+  }
+}
+
+@media (max-width: 1000px) {
   .navbar {
     width: 100vw;
     padding: 1em;

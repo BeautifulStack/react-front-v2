@@ -1,20 +1,46 @@
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { Button } from 'semantic-ui-react'
 import background from './../images/Background.webp'
 import packaging from './../images/packaging.webp'
+import { request } from './../utils/functions/request'
 
 import QRCode from 'qrcode.react'
 
-export const Box = () => {
+export const Box = ({ name }) => {
     return (
         <div className='Box'>
             <div>G</div>
-            <span>Name</span>
+            <span>{name}</span>
         </div>
     )
 }
 
 export const Home = () => {
+    const [brands, setBrands] = useState([])
+    const [categories, setCategories] = useState([])
+
+    useEffect(() => {
+        async function fetchData() {
+            const res = await request(
+                'http://localhost/php-back2/Brand/',
+                'GET'
+            )
+            setBrands(res.brands)
+        }
+        fetchData()
+    }, [])
+
+    useEffect(() => {
+        async function fetchData() {
+            const res = await request(
+                'http://localhost/php-back2/Category/',
+                'GET'
+            )
+            setCategories(res.categories)
+        }
+        fetchData()
+    }, [])
+
     const sliderRed = useRef()
 
     const slide = (e) => {
@@ -77,9 +103,9 @@ export const Home = () => {
                     <span>Parcourir Par Category: </span>
                 </div>
                 <div className='categorySelecter'>
-                    <Box />
-                    <Box />
-                    <Box />
+                    {categories.map((category, i) => (
+                        <Box key={i} name={category.categoryName} />
+                    ))}
                 </div>
             </div>
             <div className='categoryBrowse'>
@@ -93,9 +119,9 @@ export const Home = () => {
                     <span>Parcourir Par Marque: </span>
                 </div>
                 <div className='categorySelecter'>
-                    <Box />
-                    <Box />
-                    <Box />
+                    {brands.map((brand, i) => (
+                        <Box key={i} name={brand.brandName} />
+                    ))}
                     <QRCode value='qzdq3zd4q3z8dddddddddddddddddddqzdqzdqzdqzANTOINEQQQQQQQQQQQQQQQQQq4qz4dqzdqzudh' />
                 </div>
             </div>

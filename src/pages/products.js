@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useEffect } from 'react'
 import { useHistory } from 'react-router'
 import { Icon, Button } from 'semantic-ui-react'
+import { request } from './../utils/functions/request'
 
 const ProductBox = ({ id, brand, model, image, description, link }) => {
     const history = useHistory()
@@ -41,13 +43,39 @@ const ProductBox = ({ id, brand, model, image, description, link }) => {
 }
 
 export const Products = () => {
+    const [products, setProducts] = useState([])
+
+    useEffect(() => {
+        async function fetchData() {
+            const res = await request(
+                'http://localhost/php-back2/Product/',
+                'GET'
+            )
+            setProducts(res.products)
+        }
+        fetchData()
+    }, [])
+
     return (
         <div className='productsPage'>
             <div style={{ marginBottom: '1em' }}>
                 <h3>All our products</h3>
             </div>
             <div className='productContainer'>
-                <ProductBox
+                {products.map((product, i) => (
+                    <ProductBox
+                        key={i}
+                        id={product.idProduct}
+                        brand={product.brandName}
+                        model={product.modelName}
+                        image='z'
+                        description={`${product.originalPrice} -> ${product.resellPrice}
+                        `}
+                        link='Link'
+                    />
+                ))}
+
+                {/* <ProductBox
                     id='2'
                     brand='Apple'
                     model='Iphone X'
@@ -94,15 +122,7 @@ export const Products = () => {
                     image='z'
                     description='description'
                     link='Link'
-                />
-                <ProductBox
-                    id='2'
-                    brand='Apple'
-                    model='Iphone X'
-                    image='z'
-                    description='description'
-                    link='Link'
-                />
+                /> */}
             </div>
         </div>
     )

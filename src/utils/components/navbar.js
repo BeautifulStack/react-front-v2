@@ -1,8 +1,23 @@
 import { useState } from 'react'
 import { NavLink, useHistory, useLocation } from 'react-router-dom'
-import { Input, Icon, Button } from 'semantic-ui-react'
+import { Input, Icon, Button, Dropdown, Flag } from 'semantic-ui-react'
 
 export const NavBar = () => {
+    const languages = [
+        {
+            key: 'french',
+            text: 'Français',
+            value: 'french',
+            flag: 'fr',
+        },
+        {
+            key: 'english',
+            text: 'English',
+            value: 'English',
+            flag: 'us',
+        },
+    ]
+
     const history = useHistory()
     const location = useLocation()
 
@@ -55,6 +70,16 @@ export const NavBar = () => {
                         size='large'
                         name='shopping cart'
                         onClick={() => history.push('/cart')}
+                    />
+                    <Dropdown
+                        style={{ minWidth: '150px' }}
+                        button
+                        className='icon'
+                        floating
+                        labeled
+                        icon='world'
+                        options={languages}
+                        search
                     />
                 </div>
             </div>
