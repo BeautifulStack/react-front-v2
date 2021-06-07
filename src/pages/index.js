@@ -3,6 +3,8 @@ import { Button } from 'semantic-ui-react'
 import background from './../images/Background.webp'
 import packaging from './../images/packaging.webp'
 
+import QRCode from 'qrcode.react'
+
 export const Box = () => {
     return (
         <div className='Box'>
@@ -94,6 +96,7 @@ export const Home = () => {
                     <Box />
                     <Box />
                     <Box />
+                    <QRCode value='qzdq3zd4q3z8dddddddddddddddddddqzdqzdqzdqzANTOINEQQQQQQQQQQQQQQQQQq4qz4dqzdqzudh' />
                 </div>
             </div>
         </div>
