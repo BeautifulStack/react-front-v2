@@ -74,12 +74,12 @@ export const NavBar = () => {
                     <Dropdown
                         style={{ minWidth: '150px' }}
                         button
+                        defaultValue={'french'}
                         className='icon'
                         floating
                         labeled
                         icon='world'
                         options={languages}
-                        search
                     />
                 </div>
             </div>

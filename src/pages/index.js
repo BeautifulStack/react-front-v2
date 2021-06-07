@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
-import { Button } from 'semantic-ui-react'
+import { Button, Icon } from 'semantic-ui-react'
 import background from './../images/Background.webp'
 import packaging from './../images/packaging.webp'
 import { request } from './../utils/functions/request'
@@ -15,9 +15,22 @@ export const Box = ({ name }) => {
     )
 }
 
+function getWindowDimensions() {
+    const { innerWidth: width, innerHeight: height } = window
+    return {
+        width,
+        height,
+    }
+}
+
 export const Home = () => {
+    const [windowDimensions, setWindowDimensions] = useState(
+        getWindowDimensions()
+    )
+
     const [brands, setBrands] = useState([])
     const [categories, setCategories] = useState([])
+    const [box, setBox] = useState(0)
 
     useEffect(() => {
         async function fetchData() {
@@ -44,53 +57,104 @@ export const Home = () => {
     const sliderRed = useRef()
 
     const slide = (e) => {
-        const position = (sliderRed.current.clientWidth / 3) * e.target.id
+        // scrollTopMax
+
+        const position = (sliderRed.current.scrollWidth / 3) * e
         sliderRed.current.scrollTo({ left: position, behavior: 'smooth' })
+        setBox(parseInt(e))
     }
 
+    useEffect(() => {
+        function handleResize() {
+            setWindowDimensions(getWindowDimensions())
+        }
+
+        window.addEventListener('resize', handleResize)
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
+
+    console.log(box)
     return (
         <div className='home'>
             <div
-                onClick={slide}
-                ref={sliderRed}
-                className='news'
-                style={{ backgroundImage: `url(${background})` }}
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    position: 'relative',
+                }}
             >
                 <div
-                    className='news-brick'
-                    style={{ backgroundImage: `url(${packaging})` }}
+                    onClick={slide}
+                    ref={sliderRed}
+                    className='news'
+                    style={{ backgroundImage: `url(${background})` }}
                 >
-                    <span className='news-bricks-title'>Title</span>
-                    <span className='news-bricks-desc'>Desc</span>
-                    <Button>
-                        <span>GO</span>
-                    </Button>
+                    <div
+                        className='news-brick'
+                        style={{ backgroundImage: `url(${packaging})` }}
+                    >
+                        <span className='news-bricks-title'>Title</span>
+                        <span className='news-bricks-desc'>Desc</span>
+                        <Button>
+                            <span>GO</span>
+                        </Button>
+                    </div>
+                    <div
+                        className='news-brick'
+                        style={{ backgroundImage: `url(${packaging})` }}
+                    >
+                        <span className='news-bricks-title'>Title</span>
+                        <span className='news-bricks-desc'>Desc</span>
+                        <Button>
+                            <span>GO</span>
+                        </Button>
+                    </div>
+                    <div
+                        className='news-brick'
+                        style={{ backgroundImage: `url(${packaging})` }}
+                    >
+                        <span className='news-bricks-title'>Title</span>
+                        <span className='news-bricks-desc'>Desc</span>
+                        <Button>
+                            <span>GO</span>
+                        </Button>
+                    </div>
                 </div>
-                <div
-                    className='news-brick'
-                    style={{ backgroundImage: `url(${packaging})` }}
-                >
-                    <span className='news-bricks-title'>Title</span>
-                    <span className='news-bricks-desc'>Desc</span>
-                    <Button>
-                        <span>GO</span>
-                    </Button>
-                </div>
-                <div
-                    className='news-brick'
-                    style={{ backgroundImage: `url(${packaging})` }}
-                >
-                    <span className='news-bricks-title'>Title</span>
-                    <span className='news-bricks-desc'>Desc</span>
-                    <Button>
-                        <span>GO</span>
-                    </Button>
-                </div>
-            </div>
-            <div style={{ display: 'flex', margin: '0 auto' }}>
-                <span className='sliderClicker' onClick={slide} id='0'></span>
-                <span className='sliderClicker' onClick={slide} id='1'></span>
-                <span className='sliderClicker' onClick={slide} id='2'></span>
+                {windowDimensions.width > 1000 ? (
+                    <div className='slider-control'>
+                        <span
+                            className='sliderClicker'
+                            onClick={slide.bind(this, 0)}
+                        ></span>
+                        <span
+                            className='sliderClicker'
+                            onClick={slide.bind(this, 1)}
+                        ></span>
+                        <span
+                            className='sliderClicker'
+                            onClick={slide.bind(this, 2)}
+                        ></span>
+                    </div>
+                ) : (
+                    <div className='slider-control'>
+                        <span
+                            className='crosses-control'
+                            onClick={slide.bind(this, box - 1)}
+                            id={box}
+                        >
+                            <Icon size='huge' name='left arrow' />
+                        </span>
+
+                        <span
+                            className='crosses-control'
+                            onClick={slide.bind(this, box + 1)}
+                            id={box}
+                        >
+                            <Icon size='huge' name='right arrow' />
+                        </span>
+                    </div>
+                )}
             </div>
             <div className='categoryBrowse'>
                 <div

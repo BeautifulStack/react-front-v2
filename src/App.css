@@ -304,6 +304,11 @@ a.active:not(.step) > * {
   overflow: auto;
 }
 
+.slider-control {
+  display: flex;
+  margin: 0 auto;
+}
+
 @media (max-width: 1700px) {
   .account-management {
     width: 25%;
@@ -319,6 +324,23 @@ a.active:not(.step) > * {
 }
 
 @media (max-width: 1000px) {
+  .slider-control {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+  }
+
+  .crosses-control {
+opacity: 0.5;
+  }
+
+  .news-brick {
+    width: 90vw;
+    min-width: 90vw;
+    padding: 1em;
+  }
   .navbar {
     width: 100vw;
     padding: 1em;
