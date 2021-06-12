@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { NavLink, useHistory, useLocation } from 'react-router-dom'
-import { Input, Icon, Button, Dropdown, Flag } from 'semantic-ui-react'
+import { Input, Icon, Button, Dropdown } from 'semantic-ui-react'
 
 export const NavBar = () => {
     const languages = [

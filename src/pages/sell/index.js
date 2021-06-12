@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import {
     Icon,
@@ -10,6 +10,8 @@ import {
     Input,
 } from 'semantic-ui-react'
 import { StyledContainer } from '../../utils/components/containers'
+import { GLOBAL } from '../../utils/functions/GLOBAL'
+import { request } from '../../utils/functions/request'
 import {
     ColumnWrapper,
     InlineWrapper,
@@ -198,6 +200,12 @@ export const NewSell = () => {
 
     const [active, setActive] = useState(0)
 
+    const [ fetchedDatas, setFetchedDatas] = useState({
+        categories: [],
+        brands: [],
+        models: []
+    })
+
     const sliderRef = useRef()
     const inputPhoto = useRef()
 
@@ -215,7 +223,37 @@ export const NewSell = () => {
         sliderRef.current.scrollTo({ top: position, behavior: 'smooth' })
     }
 
-    console.log(model)
+    useEffect(() => {
+        async function fetchData () {
+            request(GLOBAL.URL + '/Category/').then((res) => {
+                console.log(res)
+                setFetchedDatas((data) => ({...data, categories: res.categories}) )
+            }) 
+            request(GLOBAL.URL + '/Brand/').then((res) => {
+                console.log(res)
+                setFetchedDatas((data) => ({...data, brands: res.brands}) )
+            }) 
+            request(GLOBAL.URL + '/Model/').then((res) => {
+                console.log(res)
+                setFetchedDatas((data) => ({...data, models: res.models}) )
+            })
+        }
+        fetchData()
+    }, [])
+
+    
+    const fetchModelPossibilities = async () => {
+        if (model.modelId === -1) return
+        const res = await request(GLOBAL.URL+'/Model/'+model.modelId)
+        console.log(res)
+    }
+
+    useEffect(() => {
+        console.log('a')
+        fetchModelPossibilities()
+    }, [model])
+
+    console.log(fetchedDatas)
 
     return (
         <div className='newSellPage'>
@@ -247,9 +285,9 @@ export const NewSell = () => {
                     >
                         <Icon name='payment' />
                         <Step.Content>
-                            <Step.Title>Details</Step.Title>
+                            <Step.Title>Photos</Step.Title>
                             <Step.Description>
-                                Enter product Details
+                                Give us Photos and details
                             </Step.Description>
                         </Step.Content>
                     </Step>
@@ -283,15 +321,17 @@ export const NewSell = () => {
                 <WindowSell>
                     <Select
                         placeholder='Category'
-                        options={[{ key: '1', value: '1', text: 'Category 1' }]}
+                        options={fetchedDatas.categories.map(category => ({ key: category.idCategory , value: category.idCategory, text: category.categoryName}) )}
                     />
                     <Select
                         placeholder='Brand'
-                        options={[{ key: '1', value: '1', text: 'Category 1' }]}
+                        options={fetchedDatas.brands.map(brand => ({ key: brand.idBrand , value: brand.idBrand, text: brand.brandName}) )}
                     />
                     <Select
                         placeholder='Model'
-                        options={[{ key: '1', value: '1', text: 'Category 1' }]}
+                        options={fetchedDatas.models.map(model => ({ key: model.idModel , value: model.idModel, text: model.modelName}) )}
+                        onChange={(_e, {value}) => setModel((model) => ({...model, modelId: value}))}
+
                     />
                     <Button
                         color='yellow'
