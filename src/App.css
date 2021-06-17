@@ -309,6 +309,12 @@ a.active:not(.step) > * {
   margin: 0 auto;
 }
 
+.list-page-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
 @media (max-width: 1700px) {
   .account-management {
     width: 25%;
@@ -351,6 +357,13 @@ opacity: 0.5;
 
   .inline-page-wrapper {
     flex-direction: column;
+    align-items: stretch;
+  }
+
+  .list-page-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
     align-items: stretch;
   }
 

@@ -9,6 +9,7 @@ import { Sells, NewSell } from './pages/sell/index'
 
 import { Cart } from './pages/cart/cart'
 import { Order } from './pages/orders/order'
+import { Association } from './pages/associations/index'
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                 <NavBar />
                 <Switch>
                     <Route exact path='/home' component={Home} />
+                    <Route exact path='/associations' component={Association} />
                     <Route exact path='/search/:search' component={Products} />
                     <Route exact path='/products' component={Products} />
                     <Route exact path='/sells' component={Sells} />

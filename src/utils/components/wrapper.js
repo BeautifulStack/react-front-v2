@@ -13,6 +13,11 @@ export const ColumnWrapper = ({ children }) => {
     return <div className='column-page-wrapper'>{children}</div>
 }
 
+export const ListWrapper = ({ children }) => {
+    return <div className='list-page-wrapper'>{children}</div>
+}
+
+
 export const InlineWrapper = ({ children, middle }) => {
     return (
         <div

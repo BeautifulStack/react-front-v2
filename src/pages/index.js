@@ -4,8 +4,6 @@ import background from './../images/Background.webp'
 import packaging from './../images/packaging.webp'
 import { request } from './../utils/functions/request'
 
-import QRCode from 'qrcode.react'
-
 export const Box = ({ name }) => {
     return (
         <div className='Box'>
@@ -186,7 +184,6 @@ export const Home = () => {
                     {brands.map((brand, i) => (
                         <Box key={i} name={brand.brandName} />
                     ))}
-                    <QRCode value='qzdq3zd4q3z8dddddddddddddddddddqzdqzdqzdqzANTOINEQQQQQQQQQQQQQQQQQq4qz4dqzdqzudh' />
                 </div>
             </div>
         </div>

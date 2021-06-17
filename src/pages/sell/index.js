@@ -21,6 +21,15 @@ import {
 export const Sells = () => {
     const history = useHistory()
 
+    const [offer, setOffer] = useState([])
+
+    useEffect(() => {
+        request(GLOBAL.URL + '/Offer/', 'GET').then((response) => {
+            setOffer(response.offers)
+        })
+    }, [])
+
+    console.log(offer)
     return (
         <Wrapper title='Your Sells'>
             <InlineWrapper>
@@ -200,7 +209,7 @@ export const NewSell = () => {
 
     const [active, setActive] = useState(0)
 
-    const [ fetchedDatas, setFetchedDatas] = useState({
+    const [fetchedDatas, setFetchedDatas] = useState({
         categories: [],
         brands: [],
         models: []
@@ -224,27 +233,27 @@ export const NewSell = () => {
     }
 
     useEffect(() => {
-        async function fetchData () {
+        async function fetchData() {
             request(GLOBAL.URL + '/Category/').then((res) => {
                 console.log(res)
-                setFetchedDatas((data) => ({...data, categories: res.categories}) )
-            }) 
+                setFetchedDatas((data) => ({ ...data, categories: res.categories }))
+            })
             request(GLOBAL.URL + '/Brand/').then((res) => {
                 console.log(res)
-                setFetchedDatas((data) => ({...data, brands: res.brands}) )
-            }) 
+                setFetchedDatas((data) => ({ ...data, brands: res.brands }))
+            })
             request(GLOBAL.URL + '/Model/').then((res) => {
                 console.log(res)
-                setFetchedDatas((data) => ({...data, models: res.models}) )
+                setFetchedDatas((data) => ({ ...data, models: res.models }))
             })
         }
         fetchData()
     }, [])
 
-    
+
     const fetchModelPossibilities = async () => {
         if (model.modelId === -1) return
-        const res = await request(GLOBAL.URL+'/Model/'+model.modelId)
+        const res = await request(GLOBAL.URL + '/Model/' + model.modelId)
         console.log(res)
     }
 
@@ -321,16 +330,16 @@ export const NewSell = () => {
                 <WindowSell>
                     <Select
                         placeholder='Category'
-                        options={fetchedDatas.categories.map(category => ({ key: category.idCategory , value: category.idCategory, text: category.categoryName}) )}
+                        options={fetchedDatas.categories.map(category => ({ key: category.idCategory, value: category.idCategory, text: category.categoryName }))}
                     />
                     <Select
                         placeholder='Brand'
-                        options={fetchedDatas.brands.map(brand => ({ key: brand.idBrand , value: brand.idBrand, text: brand.brandName}) )}
+                        options={fetchedDatas.brands.map(brand => ({ key: brand.idBrand, value: brand.idBrand, text: brand.brandName }))}
                     />
                     <Select
                         placeholder='Model'
-                        options={fetchedDatas.models.map(model => ({ key: model.idModel , value: model.idModel, text: model.modelName}) )}
-                        onChange={(_e, {value}) => setModel((model) => ({...model, modelId: value}))}
+                        options={fetchedDatas.models.map(model => ({ key: model.idModel, value: model.idModel, text: model.modelName }))}
+                        onChange={(_e, { value }) => setModel((model) => ({ ...model, modelId: value }))}
 
                     />
                     <Button
