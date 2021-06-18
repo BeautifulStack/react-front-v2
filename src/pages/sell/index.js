@@ -23,13 +23,28 @@ export const Sells = () => {
 
     const [offer, setOffer] = useState([])
 
+    const [offerProps, setOfferProps] = useState({
+        idSell: -1
+    })
+
+    const [propositions, setProposition] = useState([])
+
     useEffect(() => {
         request(GLOBAL.URL + '/Offer/', 'GET').then((response) => {
             setOffer(response.offers)
         })
     }, [])
 
-    console.log(offer)
+    useEffect(() => {
+        if (offerProps.idSell !== -1) {
+            request(GLOBAL.URL + '/Offer/' + offerProps.idSell, 'GET').then((response) => {
+                setProposition(response.proposition)
+            })
+
+        }
+    }, [offerProps])
+    console.log(offerProps)
+
     return (
         <Wrapper title='Your Sells'>
             <InlineWrapper>
@@ -49,31 +64,16 @@ export const Sells = () => {
                         <Icon name='add' />
                         <span>New</span>
                     </Button>
-                    <OfferLine
-                        offerId='#1861'
-                        status='accepted'
-                        date='24/05/2015: 16h30'
-                        price='200€'
-                    />
-                    <OfferLine
-                        offerId='#1861'
-                        status='accepted'
-                        date='24/05/2015: 16h30'
-                        price='200€'
-                    />
-                    <OfferLine
-                        offerId='#1861'
-                        status='accepted'
-                        date='24/05/2015: 16h30'
-                        price='200€'
-                    />
-                    <OfferLine
-                        offerId='#1861'
-                        status='accepted'
-                        date='24/05/2015: 16h30'
-                        price='200€'
-                    />
-                    {/* <span>No sell for the moment</span> */}
+                    {offer.length > 0 ?
+                        offer.map((off, i) => <OfferLine
+                            offerId={'#' + off.idSell}
+                            status={off.status}
+                            date={off.dateProposition}
+                            onClick={() => setOfferProps({ idSell: off.idSell, status: off.status, date: off.dateProposition })}
+                        />)
+                        : <span>No sell for the moment</span>
+                    }
+
                 </ColumnWrapper>
                 <StyledContainer>
                     <ColumnWrapper>
@@ -85,46 +85,13 @@ export const Sells = () => {
                         <div className='offerResumeHistory'>
                             <h5>History: </h5>
                             <div className='scroller'>
-                                <HistoryLine
-                                    status='accepted'
-                                    date='24/05/2015: 16h30'
-                                    price='200€'
-                                />
-                                <HistoryLine
-                                    status='accepted'
-                                    date='24/05/2015: 16h30'
-                                    price='200€'
-                                />
-                                <HistoryLine
-                                    status='accepted'
-                                    date='24/05/2015: 16h30'
-                                    price='200€'
-                                />
-                                <HistoryLine
-                                    status='accepted'
-                                    date='24/05/2015: 16h30'
-                                    price='200€'
-                                />
-                                <HistoryLine
-                                    status='accepted'
-                                    date='24/05/2015: 16h30'
-                                    price='200€'
-                                />
-                                <HistoryLine
-                                    status='accepted'
-                                    date='24/05/2015: 16h30'
-                                    price='200€'
-                                />
-                                <HistoryLine
-                                    status='accepted'
-                                    date='24/05/2015: 16h30'
-                                    price='200€'
-                                />
-                                <HistoryLine
-                                    status='accepted'
-                                    date='24/05/2015: 16h30'
-                                    price='200€'
-                                />
+                                {propositions.length === 0 ? <span>No Offer</span> :
+                                    propositions.map((pro, i) => <HistoryLine
+                                        status={pro.status}
+                                        date={pro.date}
+                                        price={pro.price + '€'}
+                                    />)}
+
                                 <CounterOffer />
                             </div>
 
@@ -155,9 +122,10 @@ const CounterOffer = () => {
     )
 }
 
-const OfferLine = ({ offerId, status, date, price }) => {
+const OfferLine = ({ offerId, status, date, price, onClick }) => {
     return (
         <div
+            onClick={onClick}
             style={{
                 cursor: 'pointer',
                 alignSelf: 'stretch',
@@ -189,8 +157,9 @@ const HistoryLine = ({ status, date, price }) => {
                 marginBottom: '1em',
             }}
         >
-            <span>{status}</span>
             <span>{date}</span>
+            <span>{status}</span>
+
             <span>{price}</span>
         </div>
     )

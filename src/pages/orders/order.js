@@ -6,36 +6,31 @@ import {
 
 import { StyledContainer } from '../../utils/components/containers'
 import { CartLine } from '../cart/cart'
+import { useState, useEffect } from 'react/cjs/react.development'
+import { request } from '../../utils/functions/request'
+import { GLOBAL } from '../../utils/functions/GLOBAL'
 
 export const Order = () => {
+    const [orders, setOrders] = useState([])
+
+    useEffect(() => {
+        request(GLOBAL.URL + '/Order/', 'GET').then(resp => setOrders(resp.orders))
+    }, [])
+
+    console.log(orders)
+
     return (
         <Wrapper title='Orders'>
             <InlineWrapper>
                 <ColumnWrapper>
-                    <OrderLine
-                        orderId='1385'
-                        totalprice='2513€'
-                        status='finished'
-                        date='30/05/2021 16h30'
-                    />
-                    <OrderLine
-                        orderId='1385'
-                        totalprice='2513€'
-                        status='finished'
-                        date='30/05/2021 16h30'
-                    />
-                    <OrderLine
-                        orderId='1385'
-                        totalprice='2513€'
-                        status='finished'
-                        date='30/05/2021 16h30'
-                    />
-                    <OrderLine
-                        orderId='1385'
-                        totalprice='2513€'
-                        status='finished'
-                        date='30/05/2021 16h30'
-                    />
+                    {orders.length === 0 ? <span>No orders :(</span> : orders.map(order => <OrderLine
+                        orderId={order.idBuy}
+                        totalprice={order.totalPrice + '€'}
+                        status={order.payementStatus}
+                        date={order.date}
+                    />)}
+
+
                 </ColumnWrapper>
                 <StyledContainer>
                     <OrderResume

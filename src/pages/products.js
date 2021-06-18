@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { useHistory } from 'react-router'
 import { Icon, Button } from 'semantic-ui-react'
+import { GLOBAL } from '../utils/functions/GLOBAL'
 import { request } from './../utils/functions/request'
 
 const ProductBox = ({ id, brand, model, image, description, link }) => {
@@ -32,7 +33,7 @@ const ProductBox = ({ id, brand, model, image, description, link }) => {
                 }}
                 onClick={(e) => {
                     e.stopPropagation()
-                    history.push('/producteee/' + id)
+                    request(GLOBAL.URL + '/Product/AddToCart', 'POST', { idProduct: id }).then(() => history.push('/cart'))
                 }}
             >
                 <Icon size='large' name='cart' />

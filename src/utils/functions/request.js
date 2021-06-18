@@ -3,17 +3,21 @@ export const request = async (url, method, json = null) => {
         var body = new FormData()
 
         Object.entries(json).forEach(([key, value]) => body.append(key, value))
+        // if (localStorage.getItem('FAIRREPACK_TOKEN')) body.append('token', localStorage.getItem('FAIRREPACK_TOKEN'))
     }
 
+    const headers = {
+        Accept: 'application/json',
+        ...(localStorage.getItem('FAIRREPACK_TOKEN')
+            ? { token: localStorage.getItem('FAIRREPACK_TOKEN') }
+            : {}),
+    }
+
+
     const result = await fetch(url, {
-        credentials: 'include',
+
         method: method,
-        headers: {
-            Accept: 'application/json',
-            ...(localStorage.getItem('FAIRREPACK_TOKEN')
-                ? { FAIRREPACK_TOKEN: localStorage.getItem('FAIRREPACK_TOKEN') }
-                : {}),
-        },
+        headers,
         ...(json ? { body } : {}),
     })
 

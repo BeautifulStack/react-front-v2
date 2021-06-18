@@ -48,9 +48,21 @@ export const NavBar = () => {
                     <Icon
                         style={{ cursor: 'pointer' }}
                         size='large'
+                        name='external share'
+                        onClick={() => {
+                            localStorage.removeItem('FAIRREPACK_TOKEN')
+                            history.push('/login')
+                        }}
+                    />
+
+                    <Icon
+                        style={{ cursor: 'pointer' }}
+                        size='large'
                         name='send'
                         onClick={() => history.push('/sells')}
                     />
+
+
                     <Icon
                         style={{ cursor: 'pointer' }}
                         size='large'
@@ -97,7 +109,7 @@ export const NavBar = () => {
                     <Button
                         color={
                             location.pathname.includes('/products') ||
-                            location.pathname.includes('/search')
+                                location.pathname.includes('/search')
                                 ? 'yellow'
                                 : ''
                         }

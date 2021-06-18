@@ -10,6 +10,9 @@ import { Sells, NewSell } from './pages/sell/index'
 import { Cart } from './pages/cart/cart'
 import { Order } from './pages/orders/order'
 import { Association } from './pages/associations/index'
+import { Register } from './pages/account/register'
+import { Login } from './pages/account/login'
+import { Update } from './pages/account/update'
 
 function App() {
     return (
@@ -25,6 +28,10 @@ function App() {
                     <Route exact path='/sells/new' component={NewSell} />
                     <Route exact path='/order' component={Order} />
                     <Route exact path='/cart' component={Cart} />
+                    <Route exact path='/login' component={Login} />
+                    <Route exact path='/register' component={Register} />
+                    <Route exact path='/account' component={Update} />
+
                     <Route path='/' component={Home} />
                 </Switch>
             </BrowserRouter>
