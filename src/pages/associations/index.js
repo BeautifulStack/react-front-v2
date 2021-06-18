@@ -9,12 +9,15 @@ import QRCode from 'qrcode.react'
 import { useEffect, useState } from 'react/cjs/react.development'
 import { request } from '../../utils/functions/request'
 import { GLOBAL } from '../../utils/functions/GLOBAL'
+import { useHistory } from 'react-router-dom'
 
 
 
 
 export const Association = () => {
     const [project, setProject] = useState([])
+
+    const history = useHistory()
 
     useEffect(() => {
         async function fetchAssoc() {
@@ -24,10 +27,11 @@ export const Association = () => {
         fetchAssoc()
     }, [])
 
+    console.log(project)
     return (
         <Wrapper title='Associations'>
             <ListWrapper >
-                {project.map((projetSolo, i) => <AssociationBox key={i} publicKey={projetSolo.publicKey} name={projetSolo.name} description={projetSolo.description} />)}
+                {project.map((projetSolo, i) => <AssociationBox key={i} publicKey={projetSolo.publicKey} name={projetSolo.name} description={projetSolo.description} onClick={() => history.push('/associations/' + projetSolo.idProject)} />)}
 
             </ListWrapper>
         </Wrapper>
@@ -35,10 +39,10 @@ export const Association = () => {
 }
 
 
-const AssociationBox = ({ publicKey, name, description }) => {
+const AssociationBox = ({ publicKey, name, description, onClick }) => {
     return (
         <MiddleContainer>
-            <StyledContainer>
+            <StyledContainer onClick={onClick} pointer>
                 <ColumnWrapper>
                     <h2>{name}</h2>
                     <MiddleContainer>

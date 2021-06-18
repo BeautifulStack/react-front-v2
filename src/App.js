@@ -10,6 +10,8 @@ import { Sells, NewSell } from './pages/sell/index'
 import { Cart } from './pages/cart/cart'
 import { Order } from './pages/orders/order'
 import { Association } from './pages/associations/index'
+import { AssociationId } from './pages/associations/assoc'
+
 import { Register } from './pages/account/register'
 import { Login } from './pages/account/login'
 import { Update } from './pages/account/update'
@@ -22,6 +24,8 @@ function App() {
                 <Switch>
                     <Route exact path='/home' component={Home} />
                     <Route exact path='/associations' component={Association} />
+                    <Route exact path='/associations/:id' component={AssociationId} />
+
                     <Route exact path='/search/:search' component={Products} />
                     <Route exact path='/products' component={Products} />
                     <Route exact path='/sells' component={Sells} />

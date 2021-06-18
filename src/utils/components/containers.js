@@ -9,6 +9,6 @@ export const RightContainer = ({ children }) => {
     return <div className='right-container'>{children}</div>
 }
 
-export const StyledContainer = ({ children }) => {
-    return <div className='styled-container'>{children}</div>
+export const StyledContainer = ({ children, onClick, pointer }) => {
+    return <div onClick={onClick} className='styled-container' style={{ cursor: pointer ? 'pointer' : '' }} >{children}</div>
 }

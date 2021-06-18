@@ -3,7 +3,6 @@ export const request = async (url, method, json = null) => {
         var body = new FormData()
 
         Object.entries(json).forEach(([key, value]) => body.append(key, value))
-        // if (localStorage.getItem('FAIRREPACK_TOKEN')) body.append('token', localStorage.getItem('FAIRREPACK_TOKEN'))
     }
 
     const headers = {
