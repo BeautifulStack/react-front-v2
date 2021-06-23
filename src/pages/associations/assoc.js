@@ -1,9 +1,8 @@
 import {
     ColumnWrapper,
-    ListWrapper,
     Wrapper,
 } from '../../utils/components/wrapper'
-import { MiddleContainer, StyledContainer } from '../../utils/components/containers'
+import { MiddleContainer } from '../../utils/components/containers'
 
 import QRCode from 'qrcode.react'
 import { useEffect, useState } from 'react/cjs/react.development'

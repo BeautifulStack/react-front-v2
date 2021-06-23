@@ -94,7 +94,7 @@ export const OrderResume = ({ orderId, products, totalprice, status, shippingAdd
                     price={product.price}
                 />
             ))}
-            <PDFDownloadLink document={<OrderPDF filename="facture" id={orderId} totalPrice={totalprice} products={products} date={date} shippingAddress={shippingAddress} />} fileName="facture.pdf">
+            <PDFDownloadLink document={<OrderPDF filename="facture" id={orderId} totalPrice={totalprice} product={products} date={date} shippingAddress={shippingAddress} />} fileName="facture.pdf">
 
                 {({ loading }) =>
                     loading ? 'Facture en cours de génération' : <Button

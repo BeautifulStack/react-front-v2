@@ -17,6 +17,8 @@ import {
     InlineWrapper,
     Wrapper,
 } from './../../utils/components/wrapper'
+import { OfferPDF } from '../../utils/components/pdf'
+import { PDFDownloadLink } from '@react-pdf/renderer';
 
 export const Sells = () => {
     const history = useHistory()
@@ -69,7 +71,7 @@ export const Sells = () => {
                             offerId={'#' + off.idSell}
                             status={off.status}
                             date={off.dateProposition}
-                            onClick={() => setOfferProps({ idSell: off.idSell, status: off.status, date: off.dateProposition })}
+                            onClick={() => setOfferProps({ idSell: off.idSell, status: off.status, date: off.dateProposition, location: off.location, address: off.addresse })}
                         />)
                         : <span>No sell for the moment</span>
                     }
@@ -77,10 +79,10 @@ export const Sells = () => {
                 </ColumnWrapper>
                 <StyledContainer>
                     <ColumnWrapper>
-                        <h3>Offer #1354</h3>
-                        <span>24/05/2015: 16h30</span>
+                        <h3>Offer #{offerProps.idSell}</h3>
+                        <span>{offerProps.date}</span>
                         <span>
-                            <b>Status: </b>Accepted
+                            Status: <b>{offerProps.status}</b>
                         </span>
                         <div className='offerResumeHistory'>
                             <h5>History: </h5>
@@ -91,6 +93,19 @@ export const Sells = () => {
                                         date={pro.date}
                                         price={pro.price + '€'}
                                     />)}
+                                <PDFDownloadLink document={<OfferPDF filename="facture" id={offerProps.idSell} date={offerProps.date} shippingAddress={offerProps.location + " " + offerProps.address} />} fileName="facture.pdf">
+
+                                    {({ loading }) =>
+                                        loading ? 'Facture en cours de génération' : <Button
+                                            color={
+                                                'yellow'
+                                            }
+                                        >
+                                            <Icon size='large' name='download' />
+                                            <span>Facture</span>
+                                        </Button>
+                                    }
+                                </PDFDownloadLink>
 
                                 <CounterOffer />
                             </div>
@@ -227,7 +242,6 @@ export const NewSell = () => {
     }
 
     useEffect(() => {
-        console.log('a')
         fetchModelPossibilities()
     }, [model])
 
