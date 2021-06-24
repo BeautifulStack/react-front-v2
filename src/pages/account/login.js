@@ -23,6 +23,7 @@ export const Login = () => {
         request(GLOBAL.URL + '/Login/', 'POST', login).then(res => {
             if (res.token) {
                 localStorage.setItem('FAIRREPACK_TOKEN', res.token)
+                localStorage.setItem('FAIRREPACK_ADMIN', res.admin)
                 window.location.reload(false)
             }
         })

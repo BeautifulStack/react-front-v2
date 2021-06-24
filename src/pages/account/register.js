@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router'
 import { useState, useEffect } from 'react/cjs/react.development'
 import { Input, Button, Checkbox, Select } from 'semantic-ui-react'
 import { MiddleContainer } from '../../utils/components/containers'
@@ -7,10 +8,19 @@ import {
     Wrapper,
 } from './../../utils/components/wrapper'
 
+import { GLOBAL } from './../../utils/functions/GLOBAL'
+import { request } from './../../utils/functions/request'
+
 export const Register = () => {
     const [registerInfos, SetRegisterInfos] = useState({
-        password: ''
+        firstname: "",
+        lastname: "",
+        email: "",
+        phonenumber: "",
+        password: ""
     })
+
+    const history = useHistory()
 
     const [isAssoc, setIsAssoc] = useState(false)
 
@@ -19,6 +29,10 @@ export const Register = () => {
 
     const [search, setSearch] = useState('')
 
+    const [loading, setLoading] = useState(false)
+
+    const [error, setError] = useState('')
+
     const makeRequest = () => {
         fetch("https://entreprise.data.gouv.fr/api/rna/v1/full_text/" + search).then((res) => res.json().then(j => {
 
@@ -26,34 +40,52 @@ export const Register = () => {
         }))
     }
 
+    const PostRegister = async () => {
+        const response = await request(GLOBAL.URL + '/User/', 'POST', registerInfos)
+        setLoading(false)
+
+        if (response.status === 401) {
+            setError(response.error)
+        } else {
+            history.push('/user/validation')
+        }
+        console.log(response)
+
+
+
+    }
 
     useEffect(() => {
         makeRequest()
     }, [search])
 
+    console.log(registerInfos)
 
     return <Wrapper title='Register'>
         <MiddleContainer>
             <ColumnWrapper>
-                {/* 'firstname', 'lastname', 'email', 'phonenumber', 'password' */}
+                {error !== '' ? <span style={{ marginBottom: '1em', color: 'red' }}><b>{error}</b></span> : <></>}
                 <span style={{ marginBottom: '1em' }}>Enter your informations to interact with the website</span>
-                <Input type="name" style={{ marginBottom: '1em' }} placeholder='name' />
-                <Input style={{ marginBottom: '1em' }} placeholder='LastName' />
-                <Input type="email" style={{ marginBottom: '1em' }} placeholder='Email' />
-                <Input type="tel" style={{ marginBottom: '1em' }} placeholder='phonenumber.' />
-                <Input style={{ marginBottom: '1em' }} type='password' placeholder='password.' />
-                <Input style={{ marginBottom: '1em' }} type='password' placeholder='password confirmation' />
+                <Input type="name" style={{ marginBottom: '1em' }} placeholder='name' onChange={(_event, value) => SetRegisterInfos((infos) => ({ ...infos, firstname: value.value }))} />
+                <Input style={{ marginBottom: '1em' }} placeholder='LastName' onChange={(_event, value) => SetRegisterInfos((infos) => ({ ...infos, lastname: value.value }))} />
+                <Input type="email" style={{ marginBottom: '1em' }} placeholder='Email' onChange={(_event, value) => SetRegisterInfos((infos) => ({ ...infos, email: value.value }))} />
+                <Input type="tel" style={{ marginBottom: '1em' }} placeholder='phonenumber.' onChange={(_event, value) => SetRegisterInfos((infos) => ({ ...infos, phonenumber: value.value }))} />
+                <Input style={{ marginBottom: '1em' }} type='password' placeholder='password.' onChange={(_event, value) => SetRegisterInfos((infos) => ({ ...infos, password: value.value }))} />
+                <Input style={{ marginBottom: '1em' }} type='password' placeholder='password confirmation' error={registerInfos.password !== registerInfos.passwordConfirmation} onChange={(_event, value) => SetRegisterInfos((infos) => ({ ...infos, passwordConfirmation: value.value }))} />
                 <Checkbox style={{ marginBottom: '1em' }} toggle label='Association' onChange={(_e, value) => setIsAssoc(value.checked)} />
-                {isAssoc ? <><Input style={{ marginBottom: '1em' }} type='text' placeholder='Association Name' onChange={(_event, value) => setSearch(value.value)} /><Select defaultValue={assocOptions[0] ? assocOptions[0].key : null} style={{ marginBottom: '1em' }} placeholder='Select your association' options={assocOptions} /></> : <></>}
+                {isAssoc ? <><Input style={{ marginBottom: '1em' }} type='text' placeholder='Association Name' onChange={(_event, value) => setSearch(value.value)} /><Select onChange={(_event, value) => SetRegisterInfos((infos) => ({ ...infos, assoc_id: value.value }))} defaultValue={assocOptions[0] ? assocOptions[0].key : null} style={{ marginBottom: '1em' }} placeholder='Select your association' options={assocOptions} /></> : <></>}
 
                 <Button
                     color='yellow'
 
                     onClick={(e) => {
                         e.stopPropagation()
-
+                        setLoading(true)
+                        PostRegister()
                     }}
+                    loading={loading}
                     content="Register..."
+                    disabled={registerInfos.password !== registerInfos.passwordConfirmation || !registerInfos.firstname || !registerInfos.lastname || !registerInfos.email || !registerInfos.phonenumber}
                 />
 
             </ColumnWrapper>

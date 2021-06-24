@@ -45,44 +45,70 @@ export const NavBar = () => {
                     onChange={(e) => setSearch(e.target.value)}
                 />
                 <div className='account-management'>
-                    <Icon
-                        style={{ cursor: 'pointer' }}
-                        size='large'
-                        name='external share'
-                        onClick={() => {
-                            localStorage.removeItem('FAIRREPACK_TOKEN')
-                            history.push('/login')
-                        }}
-                    />
+                    {localStorage.getItem('FAIRREPACK_TOKEN') === null ?
+                        <>
+                            <Button
+                                onClick={() => history.push('/login')}
+                                color={
+                                    location.pathname.includes('/login')
+                                        ? 'yellow'
+                                        : ''
+                                }
+                                style={{ display: 'flex', alignItems: 'center' }}
+                            >
+                                <Icon size='large' name='sign-out' />
+                                <span>Login</span>
+                            </Button>
+                            <Button
+                                onClick={() => history.push('/register')}
+                                color={
+                                    location.pathname.includes('/register')
+                                        ? 'yellow'
+                                        : ''
+                                }
+                                style={{ display: 'flex', alignItems: 'center' }}
+                            >
+                                <Icon size='large' name='sign-out' />
+                                <span>Register</span>
+                            </Button></> : <><Icon
+                                style={{ cursor: 'pointer' }}
+                                size='large'
+                                name='external share'
+                                onClick={() => {
+                                    localStorage.removeItem('FAIRREPACK_TOKEN')
+                                    history.push('/login')
+                                }}
+                            />
 
-                    <Icon
-                        style={{ cursor: 'pointer' }}
-                        size='large'
-                        name='send'
-                        onClick={() => history.push('/sells')}
-                    />
+                            <Icon
+                                style={{ cursor: 'pointer' }}
+                                size='large'
+                                name='send'
+                                onClick={() => history.push('/sells')}
+                            />
 
 
-                    <Icon
-                        style={{ cursor: 'pointer' }}
-                        size='large'
-                        name='unordered list'
-                        onClick={() => history.push('/order')}
-                    />
-                    <Icon
-                        style={{ cursor: 'pointer' }}
-                        size='large'
-                        name='circle outline'
-                        onClick={() => history.push('/account')}
-                    />
+                            <Icon
+                                style={{ cursor: 'pointer' }}
+                                size='large'
+                                name='unordered list'
+                                onClick={() => history.push('/order')}
+                            />
+                            <Icon
+                                style={{ cursor: 'pointer' }}
+                                size='large'
+                                name='circle outline'
+                                onClick={() => history.push('/account')}
+                            />
 
-                    <Icon
-                        className='notification'
-                        style={{ cursor: 'pointer' }}
-                        size='large'
-                        name='shopping cart'
-                        onClick={() => history.push('/cart')}
-                    />
+                            <Icon
+                                className='notification'
+                                style={{ cursor: 'pointer' }}
+                                size='large'
+                                name='shopping cart'
+                                onClick={() => history.push('/cart')}
+                            /></>}
+
                     <Dropdown
                         style={{ minWidth: '150px' }}
                         button
@@ -132,6 +158,34 @@ export const NavBar = () => {
                         <span>Associations</span>
                     </Button>
                 </NavLink>
+                {localStorage.getItem('FAIRREPACK_ADMIN') === "1" ?
+                    <><NavLink to='/backoffice/users'>
+                        <Button
+                            color={
+                                location.pathname === '/backoffice/users'
+                                    ? 'yellow'
+                                    : ''
+                            }
+                            style={{ display: 'flex', alignItems: 'center' }}
+                        >
+                            <Icon size='large' name='user' />
+                            <span>Users</span>
+                        </Button>
+                    </NavLink>
+                        <NavLink to='/backoffice/offers'>
+                            <Button
+                                color={
+                                    location.pathname === '/backoffice/offers'
+                                        ? 'yellow'
+                                        : ''
+                                }
+                                style={{ display: 'flex', alignItems: 'center' }}
+                            >
+                                <Icon size='large' name='zip' />
+                                <span>Offers</span>
+                            </Button>
+                        </NavLink></>
+                    : <></>}
             </div>
         </div>
     )

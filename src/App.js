@@ -16,6 +16,9 @@ import { Register } from './pages/account/register'
 import { Login } from './pages/account/login'
 import { Update } from './pages/account/update'
 
+import { BackofficeUser } from './backoffice/index'
+import { BackofficeOffers } from './backoffice/offers'
+
 function App() {
     return (
         <div className='App'>
@@ -35,6 +38,9 @@ function App() {
                     <Route exact path='/login' component={Login} />
                     <Route exact path='/register' component={Register} />
                     <Route exact path='/account' component={Update} />
+
+                    <Route exact path='/backoffice/users' component={BackofficeUser} />
+                    <Route exact path='/backoffice/offers' component={BackofficeOffers} />
 
                     <Route path='/' component={Home} />
                 </Switch>
