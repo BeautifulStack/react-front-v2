@@ -17,24 +17,37 @@ export const BackofficeOffers = () => {
         })
     }, [])
 
-
+    console.log(offers)
 
     return (
         <Wrapper title="Offers">
             <ColumnWrapper>
-                {offers.map((offer, i) => <OfferLine key={i} date={offer.dateProposition} price={offer.price} />)}
+                {offers.map((offer, i) => <OfferLine key={i} idOffer={offer.idOffer} date={offer.dateProposition} price={offer.price} />)}
 
             </ColumnWrapper>
         </Wrapper>
     )
 }
 
-const OfferLine = ({ date, model, brand, price }) => {
+const OfferLine = ({ idOffer, date, model, brand, price }) => {
     const [clicked, setClicked] = useState(false)
 
+    const acceptOffer = (id) => {
+        console.log('accepted')
+    }
+
+    const denyOffer = (id) => {
+        console.log('denied')
+    }
+
+    const newOffer = (id) => {
+        const price = prompt('New Price')
+        const comment = prompt('Comment')
+
+    }
 
     return (
         <StyledContainer>
-            <div className="offer-backoffice"><span>{date}</span><span>Model: {model}</span><span>Brand: {brand}</span><span>Price: {price}€</span><span>{clicked ? <><Button content="Accept" /><Button content="Deny" /></> : <Button content="Answer" onClick={() => setClicked(true)} />}</span></div>
+            <div className="offer-backoffice"><span>{date}</span><span>Model: {model}</span><span>Brand: {brand}</span><span>Price: {price}€</span><span style={{ flex: 2 }}>{clicked ? <><Button content="Accept" onClick={acceptOffer.bind(this, idOffer)} /><Button content="Counter Offer" onClick={newOffer.bind(this, idOffer)} /><Button content="Deny" onClick={denyOffer.bind(this, idOffer)} /></> : <Button content="Answer" onClick={() => setClicked(true)} />}</span></div>
         </StyledContainer>)
 }
