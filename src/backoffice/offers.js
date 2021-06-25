@@ -22,32 +22,33 @@ export const BackofficeOffers = () => {
     return (
         <Wrapper title="Offers">
             <ColumnWrapper>
-                {offers.map((offer, i) => <OfferLine key={i} idOffer={offer.idOffer} date={offer.dateProposition} price={offer.price} />)}
+                {offers.map((offer, i) => <OfferLine key={i} idSell={offer.idSell} idOffer={offer.idOffer} idUser={offer.idUser} date={offer.dateProposition} price={offer.price} />)}
 
             </ColumnWrapper>
         </Wrapper>
     )
 }
 
-const OfferLine = ({ idOffer, date, model, brand, price }) => {
+const OfferLine = ({ idSell, date, model, brand, price, idOffer, idUser }) => {
     const [clicked, setClicked] = useState(false)
 
-    const acceptOffer = (id) => {
-        console.log('accepted')
+    const acceptOffer = () => {
+        request(GLOBAL.URL + '/Offer/AdminProposition', 'POST', { idOffer, idSell, status: "accept" }).then(() => window.location.reload())
     }
 
-    const denyOffer = (id) => {
-        console.log('denied')
+    const denyOffer = () => {
+        request(GLOBAL.URL + '/Offer/AdminProposition', 'POST', { idOffer, idSell, status: "deny" }).then(() => window.location.reload())
     }
 
-    const newOffer = (id) => {
+    const newOffer = () => {
         const price = prompt('New Price')
         const comment = prompt('Comment')
 
+        request(GLOBAL.URL + '/Offer/AdminProposition', 'POST', { idOffer, idSell, status: "counter", idUser, comment, price }).then(() => window.location.reload())
     }
 
     return (
         <StyledContainer>
-            <div className="offer-backoffice"><span>{date}</span><span>Model: {model}</span><span>Brand: {brand}</span><span>Price: {price}€</span><span style={{ flex: 2 }}>{clicked ? <><Button content="Accept" onClick={acceptOffer.bind(this, idOffer)} /><Button content="Counter Offer" onClick={newOffer.bind(this, idOffer)} /><Button content="Deny" onClick={denyOffer.bind(this, idOffer)} /></> : <Button content="Answer" onClick={() => setClicked(true)} />}</span></div>
+            <div className="offer-backoffice"><span>{date}</span><span>Model: {model}</span><span>Brand: {brand}</span><span>Price: {price}€</span><span style={{ flex: 2 }}>{clicked ? <><Button content="Accept" onClick={acceptOffer.bind(this, idSell)} /><Button content="Counter Offer" onClick={newOffer.bind(this, idSell)} /><Button content="Deny" onClick={denyOffer.bind(this, idSell)} /></> : <Button content="Answer" onClick={() => setClicked(true)} />}</span></div>
         </StyledContainer>)
 }
