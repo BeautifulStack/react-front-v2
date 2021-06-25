@@ -24,6 +24,7 @@ export const Sells = () => {
     const history = useHistory()
 
     const [offer, setOffer] = useState([])
+    const [clicked, setClicked] = useState(false)
 
     const [offerProps, setOfferProps] = useState({
         idSell: -1
@@ -37,15 +38,37 @@ export const Sells = () => {
         })
     }, [])
 
-    useEffect(() => {
+    const updateProposition = () => {
+        setClicked(false)
         if (offerProps.idSell !== -1) {
             request(GLOBAL.URL + '/Offer/' + offerProps.idSell, 'GET').then((response) => {
                 setProposition(response.proposition)
             })
 
         }
+    }
+
+    useEffect(() => {
+        updateProposition()
     }, [offerProps])
-    console.log(offerProps)
+
+
+    const acceptOffer = () => {
+        const lastOffer = propositions[0];
+        request(GLOBAL.URL + "/Offer/Proposition/" + lastOffer.idOffer, 'POST', { status: "accept" }).then(() => updateProposition())
+    }
+
+    const denyOffer = () => {
+        const lastOffer = propositions[0];
+        request(GLOBAL.URL + "/Offer/Proposition/" + lastOffer.idOffer, 'POST', { status: "deny" }).then(() => updateProposition())
+    }
+
+    const counterOffer = () => {
+        const comment = prompt('Your message')
+        const price = prompt("You new Price")
+        const lastOffer = propositions[0];
+        request(GLOBAL.URL + "/Offer/Proposition/" + lastOffer.idOffer, 'POST', { status: "counter", comment, price }).then(() => updateProposition())
+    }
 
     return (
         <Wrapper title='Your Sells'>
@@ -84,6 +107,20 @@ export const Sells = () => {
                         <span>
                             Status: <b>{offerProps.status}</b>
                         </span>
+                        <PDFDownloadLink document={<OfferPDF filename="facture" id={offerProps.idSell} date={offerProps.date} shippingAddress={offerProps.location + " " + offerProps.address} />} fileName="facture.pdf">
+
+                            {({ loading }) =>
+                                loading ? 'Facture en cours de génération' : <Button
+                                    color={
+                                        'yellow'
+                                    }
+                                    style={{ marginTop: '1em' }}
+                                >
+                                    <Icon size='large' name='download' />
+                                    <span>Feuille d'envoi</span>
+                                </Button>
+                            }
+                        </PDFDownloadLink>
                         <div className='offerResumeHistory'>
                             <h5>History: </h5>
                             <div className='scroller'>
@@ -92,29 +129,18 @@ export const Sells = () => {
                                         status={pro.status}
                                         date={pro.date}
                                         price={pro.price + '€'}
+                                        comment={pro.comment}
                                     />)}
-                                <PDFDownloadLink document={<OfferPDF filename="facture" id={offerProps.idSell} date={offerProps.date} shippingAddress={offerProps.location + " " + offerProps.address} />} fileName="facture.pdf">
 
-                                    {({ loading }) =>
-                                        loading ? 'Facture en cours de génération' : <Button
-                                            color={
-                                                'yellow'
-                                            }
-                                        >
-                                            <Icon size='large' name='download' />
-                                            <span>Facture</span>
-                                        </Button>
-                                    }
-                                </PDFDownloadLink>
-
-                                <CounterOffer />
+                                {/* <CounterOffer /> */}
                             </div>
+                            {propositions.length !== 0 && propositions[0].proposedBy === "0" ? <span>We are examinating your offer</span> : <InlineWrapper>
+                                {clicked ? <><Button color='yellow' onClick={acceptOffer}>Accept</Button>{' '}
+                                    <Button onClick={counterOffer}>Counter Offer</Button>{' '}
+                                    <Button color='red' onClick={denyOffer}>Deny</Button></> : <Button color='yellow' onClick={() => setClicked(true)}>Answer</Button>}
 
-                            <InlineWrapper>
-                                <Button color='yellow'>Accept</Button>{' '}
-                                <Button>Counter Offer</Button>{' '}
-                                <Button color='red'>Deny</Button>
-                            </InlineWrapper>
+                            </InlineWrapper>}
+
                         </div>
                     </ColumnWrapper>
                 </StyledContainer>
@@ -160,9 +186,10 @@ const OfferLine = ({ offerId, status, date, price, onClick }) => {
     )
 }
 
-const HistoryLine = ({ status, date, price }) => {
+const HistoryLine = ({ status, date, price, comment }) => {
     return (
         <div
+
             style={{
                 display: 'flex',
                 justifyContent: 'space-between',
@@ -174,7 +201,7 @@ const HistoryLine = ({ status, date, price }) => {
         >
             <span>{date}</span>
             <span>{status}</span>
-
+            <Icon name="zoom" onClick={() => alert("Our team said: " + comment)} style={{ cursor: "pointer" }} />
             <span>{price}</span>
         </div>
     )

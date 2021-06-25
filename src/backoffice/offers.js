@@ -17,12 +17,21 @@ export const BackofficeOffers = () => {
         })
     }, [])
 
-    console.log(offers)
+    let arreangedOffer = []
+    offers.forEach((offer) => {
+        const elem = arreangedOffer.find((aroffer) => aroffer.idSell === offer.idSell)
+        if (!elem) { arreangedOffer.push(offer) }
+        else if (elem.order < offer.order) {
+            arreangedOffer = arreangedOffer.filter((aroffer) => aroffer.idSell !== offer.idSell)
+            arreangedOffer.push(offer)
+        }
+    })
 
+    console.log(arreangedOffer)
     return (
         <Wrapper title="Offers">
             <ColumnWrapper>
-                {offers.map((offer, i) => <OfferLine key={i} idSell={offer.idSell} idOffer={offer.idOffer} idUser={offer.idUser} date={offer.dateProposition} price={offer.price} />)}
+                {arreangedOffer.map((offer, i) => <OfferLine key={i} idSell={offer.idSell} idOffer={offer.idOffer} idUser={offer.idUser} date={offer.dateProposition} price={offer.price} />)}
 
             </ColumnWrapper>
         </Wrapper>
