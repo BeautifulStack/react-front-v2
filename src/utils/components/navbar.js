@@ -159,19 +159,59 @@ export const NavBar = () => {
                     </Button>
                 </NavLink>
                 {localStorage.getItem('FAIRREPACK_ADMIN') === "1" ?
-                    <><NavLink to='/backoffice/users'>
-                        <Button
-                            color={
-                                location.pathname === '/backoffice/users'
-                                    ? 'yellow'
-                                    : ''
-                            }
-                            style={{ display: 'flex', alignItems: 'center' }}
-                        >
-                            <Icon size='large' name='user' />
-                            <span>Users</span>
-                        </Button>
-                    </NavLink>
+                    <>
+                        <NavLink to='/backoffice/categories'>
+                            <Button
+                                color={
+                                    location.pathname === '/backoffice/categories'
+                                        ? 'yellow'
+                                        : ''
+                                }
+                                style={{ display: 'flex', alignItems: 'center' }}
+                            >
+                                <Icon size='large' name='certificate' />
+                                <span>Category</span>
+                            </Button>
+                        </NavLink>
+                        <NavLink to='/backoffice/brands'>
+                            <Button
+                                color={
+                                    location.pathname === '/backoffice/brands'
+                                        ? 'yellow'
+                                        : ''
+                                }
+                                style={{ display: 'flex', alignItems: 'center' }}
+                            >
+                                <Icon size='large' name='building' />
+                                <span>Brands</span>
+                            </Button>
+                        </NavLink>
+                        <NavLink to='/backoffice/models'>
+                            <Button
+                                color={
+                                    location.pathname === '/backoffice/models'
+                                        ? 'yellow'
+                                        : ''
+                                }
+                                style={{ display: 'flex', alignItems: 'center' }}
+                            >
+                                <Icon size='large' name='phone' />
+                                <span>Models</span>
+                            </Button>
+                        </NavLink>
+                        <NavLink to='/backoffice/users'>
+                            <Button
+                                color={
+                                    location.pathname === '/backoffice/users'
+                                        ? 'yellow'
+                                        : ''
+                                }
+                                style={{ display: 'flex', alignItems: 'center' }}
+                            >
+                                <Icon size='large' name='user' />
+                                <span>Users</span>
+                            </Button>
+                        </NavLink>
                         <NavLink to='/backoffice/offers'>
                             <Button
                                 color={
@@ -183,6 +223,34 @@ export const NavBar = () => {
                             >
                                 <Icon size='large' name='zip' />
                                 <span>Offers</span>
+                            </Button>
+                        </NavLink></>
+                    : <></>}
+                {localStorage.getItem('FAIRREPACK_ADMIN') === "2" ?
+                    <><NavLink to='/you/association'>
+                        <Button
+                            color={
+                                location.pathname === '/you/association'
+                                    ? 'yellow'
+                                    : ''
+                            }
+                            style={{ display: 'flex', alignItems: 'center' }}
+                        >
+                            <Icon size='large' name='user' />
+                            <span>Your association</span>
+                        </Button>
+                    </NavLink>
+                        <NavLink to='/you/association/projects'>
+                            <Button
+                                color={
+                                    location.pathname === '/you/association/projects'
+                                        ? 'yellow'
+                                        : ''
+                                }
+                                style={{ display: 'flex', alignItems: 'center' }}
+                            >
+                                <Icon size='large' name='paw' />
+                                <span>Your projects</span>
                             </Button>
                         </NavLink></>
                     : <></>}

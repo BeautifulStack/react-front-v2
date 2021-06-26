@@ -18,6 +18,9 @@ import { Update } from './pages/account/update'
 
 import { BackofficeUser } from './backoffice/index'
 import { BackofficeOffers } from './backoffice/offers'
+import { BackofficeCategories } from './backoffice/categories'
+import { BackofficeBrands } from './backoffice/brands'
+import { BackofficeModels } from './backoffice/models'
 
 function App() {
     return (
@@ -38,6 +41,10 @@ function App() {
                     <Route exact path='/login' component={Login} />
                     <Route exact path='/register' component={Register} />
                     <Route exact path='/account' component={Update} />
+
+                    <Route exact path='/backoffice/categories' component={BackofficeCategories} />
+                    <Route exact path='/backoffice/brands' component={BackofficeBrands} />
+                    <Route exact path='/backoffice/models' component={BackofficeModels} />
 
                     <Route exact path='/backoffice/users' component={BackofficeUser} />
                     <Route exact path='/backoffice/offers' component={BackofficeOffers} />

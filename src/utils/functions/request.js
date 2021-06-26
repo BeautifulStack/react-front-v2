@@ -1,8 +1,14 @@
-export const request = async (url, method, json = null) => {
-    if (json) {
+export const request = async (url, method, json = null, files = null, img_name = null) => {
+    if (json || files) {
         var body = new FormData()
 
         Object.entries(json).forEach(([key, value]) => body.append(key, value))
+        if (files) {
+            for (var i = 0, numFiles = files.length; i < numFiles; i++) {
+                body.append(img_name, files[i])
+            }
+        }
+
     }
 
     const headers = {

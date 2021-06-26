@@ -40,7 +40,6 @@ export const OrderPDF = ({ id, products, date, totalPrice }) => {
         }
 
     });
-    console.log(products)
 
     return (
         <Document>

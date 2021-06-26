@@ -445,7 +445,7 @@ export const WindowSell = ({ children }) => {
     )
 }
 
-const FileDisplay = ({ files }) => {
+export const FileDisplay = ({ files }) => {
     const newFiles = []
 
     if (!files) return <></>
