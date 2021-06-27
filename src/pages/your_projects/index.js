@@ -39,16 +39,18 @@ export const YourProjects = () => {
                         <span>New</span>
                     </Button>
                     {projects.length === 0 ?
-                        <span>No project</span> : projects.map(prod => <ProjectLine deletable name={prod.name} goal={prod.objectif} onClick={() => {
+                        <span>No project</span> : projects.map(prod => <ProjectLine prod={prod} onDelete={() => {
                         request(GLOBAL.URL + '/Project/Remove', 'POST', { idProject: prod.idProject }).then(() => updateProjects())
 
-                    }} onClick2={() => {
-                            request(GLOBAL.URL + '/Project/' + prod.idProduct, 'GET').then(res => setProject(res))
+                    }} showProject={() => {
+                            request(GLOBAL.URL + '/Project/' + prod.idProject, 'GET').then(res => setProject(res.project))
                         }} />)}
                 </ColumnWrapper>
                 <ColumnWrapper>
                     {project === null ? <></> :
-                        <ProjectBox project={project}/>
+                        <ProjectBox project={project} withdraw={() => {
+                            request(GLOBAL.URL + '/Project/Withdraw', 'POST', { idProject: project.idProject }).then(() => updateProjects())
+                        }}/>
                     }
                 </ColumnWrapper>
             </InlineWrapper>
@@ -56,32 +58,53 @@ export const YourProjects = () => {
     )
 }
 
-export const ProjectLine = ({ name, goal, onClick, deletable, onClick2 }) => {
+export const ProjectLine = ({prod, onDelete, showProject}) => {
     return (
-        <StyledContainer onClick={ onClick2 }>
+        <StyledContainer>
             <InlineWrapper>
                 <span>
-                    Name: <b>{name}</b>
+                    Name: <b>{prod.name}</b>
                 </span>
                 <span>
-                    Goal : <b>{goal}</b>
+                    Goal : <b>{prod.objectif}</b>
                 </span>
 
-                {deletable ? <span style={{ color: 'red', cursor: 'pointer' }} onClick={onClick}>
-                    <b>Remove</b>
-                </span> : <></>}
+                {
+                    prod.active === "0" ?
+                        <Button color='red' onClick={onDelete} disabled>Remove</Button> :
+                        <Button color='red' onClick={onDelete}>Remove</Button>
+                }
+
+                <Button color='yellow' onClick={showProject}>Show</Button>
 
             </InlineWrapper>
         </StyledContainer>
     )
 }
 
-
-export const ProjectBox = ({project}) => {
-    // TODO get project
+export const ProjectBox = ({project, withdraw}) => {
     return(
-        <StyledContainer>
+        <StyledContainer style={{ cursor: 'pointer' }}>
             <h2>Project #{project.idProject}</h2>
+            <ColumnWrapper>
+                <span>
+                    Name: <b>{project.name}</b>
+                </span>
+                <span>
+                    Description: <b>{project.description}</b>
+                </span>
+                <span>
+                    Goal: <b>{project.balance}/{project.objectif}</b>
+                </span>
+                <progress value={project.balance} max={project.objectif}/>
+
+                {
+                    project.balance >= project.objectif && project.active !== "1" ?
+                        <Button color='yellow' onClick={withdraw} >Withdraw</Button> :
+                        <Button color='yellow' onClick={withdraw} disabled>Withdraw</Button>
+                }
+
+            </ColumnWrapper>
         </StyledContainer>
     )
 }
