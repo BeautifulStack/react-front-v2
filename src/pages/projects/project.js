@@ -11,7 +11,7 @@ import { GLOBAL } from '../../utils/functions/GLOBAL'
 import { useParams } from 'react-router-dom'
 
 
-export const AssociationId = () => {
+export const ProjectId = () => {
     const [project, setProject] = useState([])
 
     let { id } = useParams();
@@ -27,7 +27,7 @@ export const AssociationId = () => {
     console.log(project)
 
     return (
-        <Wrapper title='Associations'>
+        <Wrapper title={project.name}>
 
             <MiddleContainer>
                 <ColumnWrapper>
