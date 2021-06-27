@@ -31,7 +31,7 @@ export const Projects = () => {
     return (
         <Wrapper title='Projects'>
             <ListWrapper >
-                {project.map((projetSolo, i) => <AssociationBox key={i} publicKey={projetSolo.publicKey} name={projetSolo.name} description={projetSolo.description} onClick={() => history.push('/projects/' + projetSolo.idProject)} />)}
+                {project.map((projetSolo, i) => <ProjectBox key={i} publicKey={projetSolo.publicKey} name={projetSolo.name} description={projetSolo.description} onClick={() => history.push('/projects/' + projetSolo.idProject)} />)}
 
             </ListWrapper>
         </Wrapper>
@@ -39,7 +39,7 @@ export const Projects = () => {
 }
 
 
-const AssociationBox = ({ publicKey, name, description, onClick }) => {
+const ProjectBox = ({ publicKey, name, description, onClick }) => {
     return (
         <MiddleContainer>
             <StyledContainer onClick={onClick} pointer>

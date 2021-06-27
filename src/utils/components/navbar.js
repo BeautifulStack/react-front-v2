@@ -227,10 +227,10 @@ export const NavBar = () => {
                         </NavLink></>
                     : <></>}
                 {localStorage.getItem('FAIRREPACK_ADMIN') === "2" ?
-                    <NavLink to='/you/association/projects'>
+                    <NavLink to='/your_projects'>
                             <Button
                                 color={
-                                    location.pathname === '/you/association/projects'
+                                    location.pathname === '/your_projects'
                                         ? 'yellow'
                                         : ''
                                 }

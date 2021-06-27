@@ -3,7 +3,7 @@ import {
     ColumnWrapper,
     Wrapper,
 } from '../../utils/components/wrapper'
-import { Input, Icon, Button, Dropdown } from 'semantic-ui-react'
+import { Icon, Button } from 'semantic-ui-react'
 
 import { StyledContainer } from '../../utils/components/containers'
 import { CartLine } from '../cart/cart'
@@ -15,7 +15,7 @@ import { PDFDownloadLink } from '@react-pdf/renderer';
 
 export const Order = () => {
     const [orders, setOrders] = useState([])
-    const [ord, setOrd] = useState({})
+    const [ord, setOrd] = useState(null)
 
     useEffect(() => {
         request(GLOBAL.URL + '/Order/', 'GET').then(resp => setOrders(resp.orders))
@@ -40,14 +40,16 @@ export const Order = () => {
                     />)}
                 </ColumnWrapper>
                 <StyledContainer>
-                    <OrderResume
-                        orderId={ord.idBuy}
-                        products={ord.products ? ord.products : []}
-                        status={ord.deliveryStatus}
-                        totalprice={ord.totalPrice + "€"}
-                        date={ord.date}
-                        shippingAddress={ord.shippingAddress}
-                    />
+                    {ord === null ? <h2>Select order...</h2> :
+                        <OrderResume
+                            orderId={ord.idBuy}
+                            products={ord.products ? ord.products : []}
+                            status={ord.deliveryStatus}
+                            totalprice={ord.totalPrice + "€"}
+                            date={ord.date}
+                            shippingAddress={ord.shippingAddress}
+                        />
+                    }
                 </StyledContainer>
             </InlineWrapper>
         </Wrapper>
@@ -87,7 +89,7 @@ export const OrderResume = ({ orderId, products, totalprice, status, shippingAdd
                     Status: <b>{status}</b>
                 </span>
             </InlineWrapper>
-            {products.map((product, i) => (
+            {products.map(( product ) => (
                 <CartLine
                     model={product.modelName}
                     brand={product.brandName}
