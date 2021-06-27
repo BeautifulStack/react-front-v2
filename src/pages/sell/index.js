@@ -70,6 +70,7 @@ export const Sells = () => {
         request(GLOBAL.URL + "/Offer/Proposition/" + lastOffer.idOffer, 'POST', { status: "counter", comment, price }).then(() => updateProposition())
     }
 
+    console.log(propositions)
     return (
         <Wrapper title='Your Sells'>
             <InlineWrapper>
@@ -209,22 +210,29 @@ const HistoryLine = ({ status, date, price, comment }) => {
 
 export const NewSell = () => {
     const [model, setModel] = useState({
-        modelId: -1,
-        brandId: -1,
-        categoryId: -1,
-        images: [],
+        idModel: -1,
+        idBrand: -1,
+        idCategory: -1,
         description: '',
+        state: "good"
     })
+
+    const [files, setFiles] = useState([])
 
     const [validate, setValidate] = useState([0, 0, 0, 0])
 
     const [active, setActive] = useState(0)
+
+    const [proposed, setProposed] = useState(0)
 
     const [fetchedDatas, setFetchedDatas] = useState({
         categories: [],
         brands: [],
         models: []
     })
+
+    const history = useHistory()
+    const [loading, setLoading] = useState(false)
 
     const sliderRef = useRef()
     const inputPhoto = useRef()
@@ -233,8 +241,9 @@ export const NewSell = () => {
         inputPhoto.current.click()
     }
 
+
     const slide = (e, a) => {
-        const position = (sliderRef.current.scrollTopMax / 3) * e
+        const position = (sliderRef.current.scrollTopMax / 2) * e
         setActive(e)
         const newValidate = [...validate]
         newValidate[a] = 1
@@ -246,33 +255,57 @@ export const NewSell = () => {
     useEffect(() => {
         async function fetchData() {
             request(GLOBAL.URL + '/Category/').then((res) => {
-                console.log(res)
                 setFetchedDatas((data) => ({ ...data, categories: res.categories }))
             })
             request(GLOBAL.URL + '/Brand/').then((res) => {
-                console.log(res)
                 setFetchedDatas((data) => ({ ...data, brands: res.brands }))
             })
             request(GLOBAL.URL + '/Model/').then((res) => {
-                console.log(res)
                 setFetchedDatas((data) => ({ ...data, models: res.models }))
             })
+
         }
         fetchData()
     }, [])
 
 
     const fetchModelPossibilities = async () => {
-        if (model.modelId === -1) return
+        if (model.idModel === -1) return
         const res = await request(GLOBAL.URL + '/Model/' + model.modelId)
         console.log(res)
     }
 
+    const sendModel = () => {
+        request(GLOBAL.URL + '/Offer/', 'POST').then((res) => {
+            if (res.status === 201) {
+                request(GLOBAL.URL + '/Offer/Proposition/', 'POST', { idSell: res.idSell, productState: model.state, idModel: model.idModel, comment: model.description, price: proposed }).then((res) => {
+                    setLoading(false)
+                    history.push('/sells')
+                })
+            }
+        })
+
+    }
+
     useEffect(() => {
         fetchModelPossibilities()
+        if (model.idModel !== -1) {
+            request(GLOBAL.URL + '/Model/Estimation', 'POST', { idModel: model.idModel, status: model.state }).then((res) => {
+                setProposed(res.price)
+            })
+        }
     }, [model])
 
-    console.log(fetchedDatas)
+
+    const findedCategoryName = (fetchedDatas.categories.find((cat) => cat.idCategory === model.idCategory))
+
+    const categoryName = findedCategoryName ? findedCategoryName.categoryName : "Not Selected"
+
+    const findedBrandName = (fetchedDatas.brands.find((brand) => model.idBrand === brand.idBrand))
+    const brandName = findedBrandName ? findedBrandName.brandName : "Not Selected"
+
+    const findedName = (fetchedDatas.models.find((mod) => model.idModel === mod.idModel))
+    const modelName = findedName ? findedName.modelName : "Not selected"
 
     return (
         <div className='newSellPage'>
@@ -310,24 +343,11 @@ export const NewSell = () => {
                             </Step.Description>
                         </Step.Content>
                     </Step>
+
                     <Step
                         completed={validate[2] === 1}
                         active={active === 2}
                         onClick={slide.bind(this, 2)}
-                    >
-                        <Icon name='payment' />
-                        <Step.Content>
-                            <Step.Title>Details</Step.Title>
-                            <Step.Description>
-                                Enter product Details
-                            </Step.Description>
-                        </Step.Content>
-                    </Step>
-
-                    <Step
-                        completed={validate[3] === 1}
-                        active={active === 3}
-                        onClick={slide.bind(this, 3)}
                     >
                         <Icon name='info' />
                         <Step.Content>
@@ -341,15 +361,24 @@ export const NewSell = () => {
                     <Select
                         placeholder='Category'
                         options={fetchedDatas.categories.map(category => ({ key: category.idCategory, value: category.idCategory, text: category.categoryName }))}
+                        onChange={(_e, { value }) => setModel((model) => ({ ...model, idCategory: value }))}
                     />
                     <Select
                         placeholder='Brand'
                         options={fetchedDatas.brands.map(brand => ({ key: brand.idBrand, value: brand.idBrand, text: brand.brandName }))}
+                        onChange={(_e, { value }) => setModel((model) => ({ ...model, idBrand: value }))}
                     />
                     <Select
                         placeholder='Model'
-                        options={fetchedDatas.models.map(model => ({ key: model.idModel, value: model.idModel, text: model.modelName }))}
-                        onChange={(_e, { value }) => setModel((model) => ({ ...model, modelId: value }))}
+                        options={fetchedDatas.models.filter(model_tmp => model_tmp.idBrand === model.idBrand && model_tmp.idCategory === model.idCategory).map(model => ({ key: model.idModel, value: model.idModel, text: model.modelName }))}
+                        onChange={(_e, { value }) => setModel((model) => ({ ...model, idModel: value }))}
+
+                    />
+                    <Select
+                        placeholder='Product State'
+                        defaultValue="good"
+                        options={[{ key: 0, value: "good", text: "Good State" }, { key: 1, value: "ok", text: "State is OK" }, { key: 2, value: "bad", text: "Bad State" }]}
+                        onChange={(_e, { value }) => setModel((model) => ({ ...model, state: value }))}
 
                     />
                     <Button
@@ -368,7 +397,7 @@ export const NewSell = () => {
                 </WindowSell>
                 <WindowSell>
                     <Form>
-                        <TextArea placeholder='Tell us more' />
+                        <TextArea placeholder='Tell us more' onChange={(_event, { value }) => setModel((model) => ({ ...model, description: value }))} />
                     </Form>
                     <input
                         ref={inputPhoto}
@@ -376,9 +405,7 @@ export const NewSell = () => {
                         multiple
                         style={{ display: 'none' }}
                         onChange={(x) =>
-                            setModel((mod) => {
-                                return { ...mod, images: x.target.files }
-                            })
+                            setFiles(x.target.files)
                         }
                     />
 
@@ -387,7 +414,7 @@ export const NewSell = () => {
                         content='Add Photos'
                         style={{ margin: '0em 1em 1em 1em' }}
                     />
-                    <FileDisplay files={model.images} />
+                    <FileDisplay files={files} />
                     <Button
                         color='yellow'
                         style={{
@@ -403,34 +430,31 @@ export const NewSell = () => {
                     </Button>
                 </WindowSell>
                 <WindowSell>
-                    <Button
-                        color='yellow'
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            alignSelf: 'flex-end',
-                            marginRight: '1em',
-                        }}
-                        onClick={slide.bind(this, 3, 2)}
-                    >
-                        <Icon name='add' />
-                        <span>Next</span>
-                    </Button>
-                </WindowSell>
-                <WindowSell>
-                    <Button
-                        color='yellow'
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            alignSelf: 'flex-end',
-                            marginRight: '1em',
-                        }}
-                        onClick={slide.bind(this, 3, 3)}
-                    >
-                        <Icon name='add' />
-                        <span>Next</span>
-                    </Button>
+                    <ColumnWrapper>
+                        <h3>Resume</h3>
+                        <span>Category: <b>{categoryName}</b></span>
+                        <span>Brand: <b>{brandName}</b></span>
+                        <span>Model: <b>{modelName}</b></span>
+                        <span>For your product, we propose you <b>{proposed}€</b></span>
+                        <Button
+                            loading={loading}
+
+                            color='yellow'
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                alignSelf: 'flex-end',
+                                marginRight: '1em',
+                            }}
+                            onClick={() => {
+                                setLoading(true)
+                                sendModel()
+                            }}
+                        >
+                            <Icon name='add' />
+                            <span>Confirm</span>
+                        </Button>
+                    </ColumnWrapper>
                 </WindowSell>
             </div>
         </div>
@@ -454,7 +478,6 @@ export const FileDisplay = ({ files }) => {
         newFiles.push(files[i])
     }
 
-    console.log(newFiles)
     return (
         <div className='fileDisplay'>
             {newFiles.map((file, i) => (
