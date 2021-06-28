@@ -32,13 +32,21 @@ export const Cart = () => {
 
 
 
+    const history = useHistory()
+
+    if (!localStorage.getItem("FAIRREPACK_TOKEN")) history.push('/login')
 
     const stripePromise = loadStripe(
         'pk_test_51IoECAGhzmo20Me7YY9TfXe3cWzECpBBD1hfobRydR8DnnYdWGo50Rs2UMm9Mxbi9fYa339vatoeD28Gr5lcZLOV00lP9Otpka'
     )
 
     const updateCart = () => {
-        request(GLOBAL.URL + '/Product/Cart', 'GET').then(res => setShoppingCart(res.products))
+        request(GLOBAL.URL + '/Product/Cart', 'GET').then(res => {
+            if (res.status === 201) {
+                setShoppingCart(res.products)
+            }
+
+        })
 
     }
     useEffect(() => {
@@ -88,9 +96,13 @@ const PayementForm = () => {
     const stripe = useStripe()
     const elements = useElements()
     const [address, setAddress] = useState('')
+
+    const [loading, setLoading] = useState(false)
+
     const history = useHistory()
 
     const handleSubmit = async (event) => {
+        setLoading(true)
         // Block native form submission.
         event.preventDefault()
 
@@ -116,6 +128,7 @@ const PayementForm = () => {
                 { payment_method: paymentMethod.id, delivery_address: address }
             )
             history.push('/order')
+            setLoading(false)
 
         }
     }
@@ -152,7 +165,7 @@ const PayementForm = () => {
             />
 
         </div>
-        <Button color='yellow' disabled={address.length === 0} onClick={handleSubmit}>Pay</Button>
+        <Button color='yellow' disabled={address.length === 0} onClick={handleSubmit} loading={loading}>Pay</Button>
     </>
 }
 

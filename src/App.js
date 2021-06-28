@@ -23,6 +23,7 @@ import { BackofficeBrands } from './backoffice/brands'
 import { BackofficeModels } from './backoffice/models'
 import { YourProjects } from "./pages/your_projects";
 import { NewProject } from "./pages/your_projects/new_project";
+import { Validator } from './pages/validator'
 
 function App() {
     return (
@@ -34,6 +35,7 @@ function App() {
                     <Route exact path='/projects' component={Projects} />
                     <Route exact path='/projects/:id' component={ProjectId} />
 
+                    <Route exact path='/validate/:id' component={Validator} />
                     <Route exact path='/products/:search/:id' component={Products} />
                     <Route exact path='/products' component={Products} />
                     <Route exact path='/sells' component={Sells} />

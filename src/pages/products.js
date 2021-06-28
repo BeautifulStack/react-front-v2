@@ -7,7 +7,7 @@ import { request } from './../utils/functions/request'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useParams } from 'react-router-dom'
 
-const ProductBox = ({ id, brand, model, description }) => {
+const ProductBox = ({ id, brand, model, description, image }) => {
     const [t] = useTranslation('common')
 
     const history = useHistory()
@@ -22,7 +22,7 @@ const ProductBox = ({ id, brand, model, description }) => {
         >
             <img
                 width='100px'
-                src='https://cnet3.cbsistatic.com/img/AljlQd2oy0rQXyooeLbR4Fog1-c=/2020/10/13/c9110b79-f2a4-422a-ac6a-4e4cb08d1fe3/34-apple-iphone-12-pro-5g-2020.png'
+                src={GLOBAL.URL + '/Images/' + image}
                 alt='missing Photos :('
             />
             <span style={{ fontWeight: 'bold' }}>
@@ -88,7 +88,7 @@ export const Products = () => {
                         id={product.idProduct}
                         brand={product.brandName}
                         model={product.modelName}
-                        image='z'
+                        image={product.path}
                         description={`${product.originalPrice} -> ${product.resellPrice}
                         `}
                         link='Link'

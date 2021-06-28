@@ -25,12 +25,6 @@ export const NavBar = () => {
     const history = useHistory()
     const location = useLocation()
 
-    const [search, setSearch] = useState('')
-
-    const submitSearch = () => {
-        history.push('/search/' + search)
-    }
-
     return (
         <div>
             <div className='navbar'>
@@ -38,16 +32,6 @@ export const NavBar = () => {
                 <NavLink to='/' className='title'>
                     FairRepack
                 </NavLink>
-                <Input
-                    icon={<Icon name='search' link onClick={submitSearch} />}
-                    placeholder='Search...'
-                    className='input-navbar'
-                    value={search}
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter') submitSearch()
-                    }}
-                    onChange={(e) => setSearch(e.target.value)}
-                />
                 <div className='account-management'>
                     {localStorage.getItem('FAIRREPACK_TOKEN') === null ?
                         <>
@@ -234,18 +218,18 @@ export const NavBar = () => {
                     : <></>}
                 {localStorage.getItem('FAIRREPACK_ADMIN') === "2" ?
                     <NavLink to='/your_projects'>
-                            <Button
-                                color={
-                                    location.pathname === '/your_projects'
-                                        ? 'yellow'
-                                        : ''
-                                }
-                                style={{ display: 'flex', alignItems: 'center' }}
-                            >
-                                <Icon size='large' name='user' />
-                                <span>Your projects</span>
-                            </Button>
-                        </NavLink>
+                        <Button
+                            color={
+                                location.pathname === '/your_projects'
+                                    ? 'yellow'
+                                    : ''
+                            }
+                            style={{ display: 'flex', alignItems: 'center' }}
+                        >
+                            <Icon size='large' name='user' />
+                            <span>Your projects</span>
+                        </Button>
+                    </NavLink>
                     : <></>}
             </div>
         </div>

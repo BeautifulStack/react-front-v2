@@ -39,4 +39,16 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     --></body>
+    <script
+        src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"
+        async=""
+    ></script>
+    <script>
+        window.OneSignal = window.OneSignal || []
+        OneSignal.push(function () {
+            OneSignal.init({
+                appId: '524e7f46-a6f6-48c8-bc94-6ce1a6a32328',
+            })
+        })
+    </script>
 </html>
