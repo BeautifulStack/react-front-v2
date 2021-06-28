@@ -74,7 +74,7 @@ export const ProjectLine = ({prod, onDelete, showProject}) => {
                 </span>
 
                 {
-                    prod.active === "0" ?
+                    prod.active > "0" ?
                         <Button color='red' onClick={onDelete} disabled>Remove</Button> :
                         <Button color='red' onClick={onDelete}>Remove</Button>
                 }
@@ -98,14 +98,18 @@ export const ProjectBox = ({project, withdraw}) => {
                     Description: <b>{project.description}</b>
                 </span>
                 {
-                    project.active === "0" ?
-                        <span> Success !</span> :
-                        <span>Goal: <b>{project.balance}/{project.objectif}</b></span>
+                    project.active > "0" ?
+                        <>
+                            <span> Success !</span>
+                            <h2><b>{project.active/2} EUR Claimed</b></h2>
+                        </> :
+                        <>
+                            <span>Goal: <b>{project.balance}/{project.objectif}</b></span>
+                            <progress value={project.balance} max={project.objectif}/>
+                        </>
                 }
 
-                <progress value={project.balance} max={project.objectif}/>
-
-                <Button color='yellow' onClick={withdraw} disabled={project.balance < project.objectif || project.active === "0"}>Withdraw</Button>
+                <Button color='yellow' onClick={withdraw} disabled={project.balance < project.objectif || project.active > "0"}>Withdraw</Button>
 
             </ColumnWrapper>
         </StyledContainer>
