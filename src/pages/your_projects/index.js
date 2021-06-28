@@ -32,7 +32,7 @@ export const YourProjects = () => {
                         }}
                         onClick={(e) => {
                             e.stopPropagation()
-                            history.push('/')
+                            history.push('/new_project')
                         }}
                     >
                         <Icon name='add' />

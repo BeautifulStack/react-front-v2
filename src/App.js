@@ -22,6 +22,7 @@ import { BackofficeCategories } from './backoffice/categories'
 import { BackofficeBrands } from './backoffice/brands'
 import { BackofficeModels } from './backoffice/models'
 import {YourProjects} from "./pages/your_projects";
+import {NewProject} from "./pages/your_projects/new_project";
 
 function App() {
     return (
@@ -51,6 +52,7 @@ function App() {
                     <Route exact path='/backoffice/offers' component={BackofficeOffers} />
 
                     <Route exact path='/your_projects' component={YourProjects} />
+                    <Route exact path='/new_project' component={NewProject} />
 
                     <Route path='/' component={Home} />
                 </Switch>
