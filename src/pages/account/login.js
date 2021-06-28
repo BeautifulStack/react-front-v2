@@ -9,7 +9,12 @@ import {
     Wrapper,
 } from './../../utils/components/wrapper'
 
+import { useTranslation } from 'react-i18next'
+
 export const Login = () => {
+    const [t] = useTranslation('common')
+
+
     const [login, setLogin] = useState({
         password: '',
         email: ''
@@ -29,14 +34,14 @@ export const Login = () => {
         })
     }
 
-    return <Wrapper title='Login'>
+    return <Wrapper title={t('login')}>
         <MiddleContainer>
             <ColumnWrapper>
                 {/* 'firstname', 'lastname', 'email', 'phonenumber', 'password' */}
-                <span style={{ marginBottom: '1em' }}>Enter your informations to interact with the website</span>
+                <span style={{ marginBottom: '1em' }}>{t('enter_credentials')}</span>
 
                 <Input type="email" style={{ marginBottom: '1em' }} placeholder='Email' onChange={(e) => setLogin((log) => ({ ...log, email: e.target.value }))} />
-                <Input style={{ marginBottom: '1em' }} type='password' placeholder='password.' onChange={(e) => setLogin((log) => ({ ...log, password: e.target.value }))} />
+                <Input style={{ marginBottom: '1em' }} type='password' placeholder={t('password')} onChange={(e) => setLogin((log) => ({ ...log, password: e.target.value }))} />
                 <Button
                     color='yellow'
 

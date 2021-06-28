@@ -22,7 +22,11 @@ import { request } from '../../utils/functions/request'
 import { GLOBAL } from '../../utils/functions/GLOBAL'
 import { useHistory } from 'react-router-dom'
 
+import { useTranslation } from 'react-i18next'
+
+
 export const Cart = () => {
+    const [t] = useTranslation('common')
 
     const [shoppingCart, setShoppingCart] = useState([])
 
@@ -55,15 +59,15 @@ export const Cart = () => {
                 <ColumnWrapper>
                     <StyledContainer>
                         <ColumnWrapper>
-                            <h5>Your Order</h5>
+                            <h5>{t('order')}</h5>
                             <InlineWrapper middle>
-                                <span>Total Price: {shoppingCart.reduce((acc, obj) => { return acc + parseInt(obj.resellPrice) }, 0)}€</span>
+                                <span>{t('total_price')}: {shoppingCart.reduce((acc, obj) => { return acc + parseInt(obj.resellPrice) }, 0)}€</span>
                             </InlineWrapper>
                         </ColumnWrapper>
                     </StyledContainer>
                     <StyledContainer>
                         <ColumnWrapper>
-                            <h5>Payment</h5>
+                            <h5>{t('payement')}</h5>
                             <Elements stripe={stripePromise}>
                                 <PayementForm />
 
@@ -152,20 +156,22 @@ const PayementForm = () => {
 }
 
 export const CartLine = ({ model, price, brand, onClick, deletable }) => {
+    const [t] = useTranslation('common')
+
     return (
         <StyledContainer>
             <InlineWrapper>
                 <span>
-                    Brand: <b>{brand}</b>
+                    {t('brand')}: <b>{brand}</b>
                 </span>
                 <span>
-                    Model: <b>{model}</b>
+                    {t('model')}: <b>{model}</b>
                 </span>
                 <span>
                     <b>{price}€</b>
                 </span>
                 {deletable ? <span style={{ color: 'red', cursor: 'pointer' }} onClick={onClick}>
-                    <b>Remove</b>
+                    <b>{t('remove')}</b>
                 </span> : <></>}
 
             </InlineWrapper>

@@ -6,7 +6,11 @@ import { useState } from 'react/cjs/react.development'
 import { request } from '../utils/functions/request'
 import { GLOBAL } from '../utils/functions/GLOBAL'
 
+import { useTranslation } from 'react-i18next'
+
 export const BackofficeCategories = () => {
+    const [t] = useTranslation('common')
+
     const [categories, setCategories] = useState([])
     const [categoryName, setCategoryName] = useState('')
 
@@ -31,14 +35,12 @@ export const BackofficeCategories = () => {
         })
     }
 
-
-    console.log(categories)
     return (
-        <Wrapper title="Categories">
+        <Wrapper title={t('category')}>
             <InlineWrapper>
                 <StyledContainer>
                     <ColumnWrapper>
-                        <h3>New Category</h3>
+                        <h3>{t('new') + " " + t('category')}</h3>
                         <Input style={{ marginBottom: '1em' }} placeholder="Category Name" onChange={(_event, { value }) => setCategoryName(value)} value={categoryName} />
                         <Button color="yellow" onClick={createCategory} disabled={categoryName.length === 0}>Create</Button>
                     </ColumnWrapper>

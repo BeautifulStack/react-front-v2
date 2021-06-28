@@ -6,7 +6,11 @@ import { useState } from 'react/cjs/react.development'
 import { request } from '../utils/functions/request'
 import { GLOBAL } from '../utils/functions/GLOBAL'
 
+import { useTranslation } from 'react-i18next'
+
 export const BackofficeOffers = () => {
+    const [t] = useTranslation('common')
+
     const [offers, setOffer] = useState([])
 
     useState(() => {
@@ -27,9 +31,8 @@ export const BackofficeOffers = () => {
         }
     })
 
-    console.log(arreangedOffer)
     return (
-        <Wrapper title="Offers">
+        <Wrapper title={t('offers')}>
             <ColumnWrapper>
                 {arreangedOffer.map((offer, i) => <OfferLine key={i} idSell={offer.idSell} idOffer={offer.idOffer} idUser={offer.idUser} date={offer.dateProposition} price={offer.price} />)}
 

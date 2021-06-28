@@ -9,7 +9,11 @@ import {
     Wrapper,
 } from './../../utils/components/wrapper'
 
+import { useTranslation } from 'react-i18next'
+
 export const Update = () => {
+    const [t] = useTranslation('common')
+
     const [pubKey, setPubKey] = useState('')
 
     const history = useHistory()
@@ -20,11 +24,11 @@ export const Update = () => {
             history.push('/')
         })
     }
-    return <Wrapper title='Public Key'>
+    return <Wrapper title={t('address')}>
         <MiddleContainer>
             <ColumnWrapper>
                 {/* 'firstname', 'lastname', 'email', 'phonenumber', 'password' */}
-                <span style={{ marginBottom: '1em' }}>Enter your publicKey to be able to receive your GreenCoins</span>
+                <span style={{ marginBottom: '1em' }}>{t('enter_address')}</span>
 
                 <Input type="text" style={{ marginBottom: '1em' }} placeholder='Public Key' onChange={(e) => setPubKey(e.target.value)} />
                 <Button
@@ -34,7 +38,7 @@ export const Update = () => {
                         e.stopPropagation()
                         updatePukKey()
                     }}
-                    content="Confirm"
+                    content={t('confirm')}
                 />
 
             </ColumnWrapper>

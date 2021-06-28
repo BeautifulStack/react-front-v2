@@ -6,7 +6,11 @@ import { useState, useEffect } from 'react/cjs/react.development'
 import { request } from '../utils/functions/request'
 import { GLOBAL } from '../utils/functions/GLOBAL'
 
+import { useTranslation } from 'react-i18next'
+
 export const BackofficeUser = () => {
+    const [t] = useTranslation('common')
+
     const [users, setUsers] = useState([])
 
     useEffect(() => {
@@ -17,7 +21,7 @@ export const BackofficeUser = () => {
     }, [])
 
     return (
-        <Wrapper title="Users">
+        <Wrapper title={t('users')}>
             <ColumnWrapper>
                 {users.map((user, i) => <UserLine idUser={user.idUser} isAdmin={user.isAdmin} key={i} phonenumber={user.phonenumber} lastname={user.lastname} firstname={user.firstname} lastlog={user.lastlogin} email={user.email} />)}
 
@@ -51,7 +55,7 @@ const UserLine = ({ lastlog, isAdmin, firstname, lastname, email, phonenumber, i
 
 const getUserType = (adminNumber) => {
     switch (adminNumber) {
-        case "1": return "Est un administrateur"
+        case "1": return
         case "2": return "Est une association"
         default: return "N'est pas un administrateur"
     }

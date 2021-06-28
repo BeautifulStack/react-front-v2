@@ -19,8 +19,11 @@ import {
 } from './../../utils/components/wrapper'
 import { OfferPDF } from '../../utils/components/pdf'
 import { PDFDownloadLink } from '@react-pdf/renderer';
+import { useTranslation } from 'react-i18next'
 
 export const Sells = () => {
+    const [t] = useTranslation('common')
+
     const history = useHistory()
 
     const [offer, setOffer] = useState([])
@@ -70,9 +73,8 @@ export const Sells = () => {
         request(GLOBAL.URL + "/Offer/Proposition/" + lastOffer.idOffer, 'POST', { status: "counter", comment, price }).then(() => updateProposition())
     }
 
-    console.log(propositions)
     return (
-        <Wrapper title='Your Sells'>
+        <Wrapper title={t('your_sells')}>
             <InlineWrapper>
                 <ColumnWrapper>
                     <Button
@@ -88,7 +90,7 @@ export const Sells = () => {
                         }}
                     >
                         <Icon name='add' />
-                        <span>New</span>
+                        <span>{t('new')}</span>
                     </Button>
                     {offer.length > 0 ?
                         offer.map((off, i) => <OfferLine
@@ -97,13 +99,13 @@ export const Sells = () => {
                             date={off.dateProposition}
                             onClick={() => setOfferProps({ idSell: off.idSell, status: off.status, date: off.dateProposition, location: off.location, address: off.addresse })}
                         />)
-                        : <span>No sell for the moment</span>
+                        : <span>{t('no_sells')}</span>
                     }
 
                 </ColumnWrapper>
                 <StyledContainer>
                     <ColumnWrapper>
-                        <h3>Offer #{offerProps.idSell}</h3>
+                        <h3>{t('offer')} #{offerProps.idSell}</h3>
                         <span>{offerProps.date}</span>
                         <span>
                             Status: <b>{offerProps.status}</b>
@@ -111,21 +113,21 @@ export const Sells = () => {
                         <PDFDownloadLink document={<OfferPDF filename="facture" id={offerProps.idSell} date={offerProps.date} shippingAddress={offerProps.location + " " + offerProps.address} />} fileName="facture.pdf">
 
                             {({ loading }) =>
-                                loading ? 'Facture en cours de génération' : <Button
+                                loading ? t('generating') : <Button
                                     color={
                                         'yellow'
                                     }
                                     style={{ marginTop: '1em' }}
                                 >
                                     <Icon size='large' name='download' />
-                                    <span>Feuille d'envoi</span>
+                                    <span>{t('delivery_sheet')}</span>
                                 </Button>
                             }
                         </PDFDownloadLink>
                         <div className='offerResumeHistory'>
-                            <h5>History: </h5>
+                            <h5>{t('history')}: </h5>
                             <div className='scroller'>
-                                {propositions.length === 0 ? <span>No Offer</span> :
+                                {propositions.length === 0 ? <span>{t('no_offer')}</span> :
                                     propositions.map((pro, i) => <HistoryLine
                                         status={pro.status}
                                         date={pro.date}
@@ -209,6 +211,8 @@ const HistoryLine = ({ status, date, price, comment }) => {
 }
 
 export const NewSell = () => {
+    const [t] = useTranslation('common')
+
     const [model, setModel] = useState({
         idModel: -1,
         idBrand: -1,
@@ -326,7 +330,7 @@ export const NewSell = () => {
                         <Step.Content>
                             <Step.Title>Model</Step.Title>
                             <Step.Description>
-                                Choose your products's Model
+                                {t('choose_model')}
                             </Step.Description>
                         </Step.Content>
                     </Step>
@@ -339,7 +343,7 @@ export const NewSell = () => {
                         <Step.Content>
                             <Step.Title>Photos</Step.Title>
                             <Step.Description>
-                                Give us Photos and details
+                                {t('more_details')}
                             </Step.Description>
                         </Step.Content>
                     </Step>
@@ -351,7 +355,7 @@ export const NewSell = () => {
                     >
                         <Icon name='info' />
                         <Step.Content>
-                            <Step.Title>Confirm Order</Step.Title>
+                            <Step.Title>{t('confirm_sell')}</Step.Title>
                         </Step.Content>
                     </Step>
                 </Step.Group>
@@ -359,23 +363,23 @@ export const NewSell = () => {
             <div className='newSellWindowWrapper' ref={sliderRef}>
                 <WindowSell>
                     <Select
-                        placeholder='Category'
+                        placeholder={t('category')}
                         options={fetchedDatas.categories.map(category => ({ key: category.idCategory, value: category.idCategory, text: category.categoryName }))}
                         onChange={(_e, { value }) => setModel((model) => ({ ...model, idCategory: value }))}
                     />
                     <Select
-                        placeholder='Brand'
+                        placeholder={t('brand')}
                         options={fetchedDatas.brands.map(brand => ({ key: brand.idBrand, value: brand.idBrand, text: brand.brandName }))}
                         onChange={(_e, { value }) => setModel((model) => ({ ...model, idBrand: value }))}
                     />
                     <Select
-                        placeholder='Model'
+                        placeholder={t('models')}
                         options={fetchedDatas.models.filter(model_tmp => model_tmp.idBrand === model.idBrand && model_tmp.idCategory === model.idCategory).map(model => ({ key: model.idModel, value: model.idModel, text: model.modelName }))}
                         onChange={(_e, { value }) => setModel((model) => ({ ...model, idModel: value }))}
 
                     />
                     <Select
-                        placeholder='Product State'
+                        placeholder={t('product_state')}
                         defaultValue="good"
                         options={[{ key: 0, value: "good", text: "Good State" }, { key: 1, value: "ok", text: "State is OK" }, { key: 2, value: "bad", text: "Bad State" }]}
                         onChange={(_e, { value }) => setModel((model) => ({ ...model, state: value }))}
@@ -392,7 +396,7 @@ export const NewSell = () => {
                         onClick={slide.bind(this, 1, 0)}
                     >
                         <Icon name='add' />
-                        <span>Next</span>
+                        <span>{t('next')}</span>
                     </Button>
                 </WindowSell>
                 <WindowSell>
@@ -426,16 +430,16 @@ export const NewSell = () => {
                         onClick={slide.bind(this, 2, 1)}
                     >
                         <Icon name='add' />
-                        <span>Next</span>
+                        <span>{t('next')}</span>
                     </Button>
                 </WindowSell>
                 <WindowSell>
                     <ColumnWrapper>
-                        <h3>Resume</h3>
-                        <span>Category: <b>{categoryName}</b></span>
-                        <span>Brand: <b>{brandName}</b></span>
-                        <span>Model: <b>{modelName}</b></span>
-                        <span>For your product, we propose you <b>{proposed}€</b></span>
+                        <h3>{t('resume')}</h3>
+                        <span>{t('category')}: <b>{categoryName}</b></span>
+                        <span>{t('brand')}: <b>{brandName}</b></span>
+                        <span>{t('models')}: <b>{modelName}</b></span>
+                        <span>{t('proposition_price')}<b>{proposed}€</b></span>
                         <Button
                             loading={loading}
 
@@ -452,7 +456,7 @@ export const NewSell = () => {
                             }}
                         >
                             <Icon name='add' />
-                            <span>Confirm</span>
+                            <span>{t('confirm_sell')}</span>
                         </Button>
                     </ColumnWrapper>
                 </WindowSell>

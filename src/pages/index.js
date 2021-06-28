@@ -4,6 +4,7 @@ import { GLOBAL } from '../utils/functions/GLOBAL'
 import background from './../images/Background.webp'
 import packaging from './../images/packaging.webp'
 import { request } from './../utils/functions/request'
+import { useTranslation } from 'react-i18next'
 
 export const Box = ({ name }) => {
     return (
@@ -23,6 +24,9 @@ function getWindowDimensions() {
 }
 
 export const Home = () => {
+    const [t] = useTranslation('common')
+
+
     const [windowDimensions, setWindowDimensions] = useState(
         getWindowDimensions()
     )
@@ -163,7 +167,7 @@ export const Home = () => {
                         marginBottom: '.75em',
                     }}
                 >
-                    <span>Parcourir Par Category: </span>
+                    <span>{t('browse_by_cat')}</span>
                 </div>
                 <div className='categorySelecter'>
                     {categories.map((category, i) => (
@@ -179,7 +183,7 @@ export const Home = () => {
                         marginBottom: '.75em',
                     }}
                 >
-                    <span>Parcourir Par Marque: </span>
+                    <span>{t('browse_by_brand')}</span>
                 </div>
                 <div className='categorySelecter'>
                     {brands.map((brand, i) => (

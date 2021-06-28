@@ -4,8 +4,11 @@ import { useHistory } from 'react-router'
 import { Icon, Button } from 'semantic-ui-react'
 import { GLOBAL } from '../utils/functions/GLOBAL'
 import { request } from './../utils/functions/request'
+import { useTranslation } from 'react-i18next'
 
-const ProductBox = ({ id, brand, model, image, description, link }) => {
+const ProductBox = ({ id, brand, model, description }) => {
+    const [t] = useTranslation('common')
+
     const history = useHistory()
 
     return (
@@ -37,13 +40,15 @@ const ProductBox = ({ id, brand, model, image, description, link }) => {
                 }}
             >
                 <Icon size='large' name='cart' />
-                <span>Buy</span>
+                <span>{t('buy')}</span>
             </Button>
         </div>
     )
 }
 
 export const Products = () => {
+    const [t] = useTranslation('common')
+
     const [products, setProducts] = useState([])
 
     useEffect(() => {
@@ -60,7 +65,7 @@ export const Products = () => {
     return (
         <div className='productsPage'>
             <div style={{ marginBottom: '1em' }}>
-                <h3>All our products</h3>
+                <h3>{t('all_products')}</h3>
             </div>
             <div className='productContainer'>
                 {products.map((product, i) => (

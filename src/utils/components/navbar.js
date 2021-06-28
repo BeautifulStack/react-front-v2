@@ -4,7 +4,7 @@ import { Input, Icon, Button, Dropdown } from 'semantic-ui-react'
 import { useTranslation } from 'react-i18next'
 
 export const NavBar = () => {
-    const [_t, i18n] = useTranslation('common')
+    const [t, i18n] = useTranslation('common')
 
 
     const languages = [
@@ -61,7 +61,7 @@ export const NavBar = () => {
                                 style={{ display: 'flex', alignItems: 'center' }}
                             >
                                 <Icon size='large' name='sign-out' />
-                                <span>Login</span>
+                                <span>{t('login')}</span>
                             </Button>
                             <Button
                                 onClick={() => history.push('/register')}
@@ -73,7 +73,7 @@ export const NavBar = () => {
                                 style={{ display: 'flex', alignItems: 'center' }}
                             >
                                 <Icon size='large' name='sign-out' />
-                                <span>Register</span>
+                                <span>{t('register')}</span>
                             </Button></> : <><Icon
                                 style={{ cursor: 'pointer' }}
                                 size='large'
@@ -117,7 +117,7 @@ export const NavBar = () => {
                     <Dropdown
                         style={{ minWidth: '150px' }}
                         button
-                        defaultValue={'french'}
+                        defaultValue={'fr'}
                         className='icon'
                         floating
                         labeled
@@ -134,7 +134,7 @@ export const NavBar = () => {
                         style={{ display: 'flex', alignItems: 'center' }}
                     >
                         <Icon size='large' name='home' />
-                        <span>Home</span>
+                        <span>{t('home')}</span>
                     </Button>
                 </NavLink>
                 <NavLink to='/products'>
@@ -148,7 +148,7 @@ export const NavBar = () => {
                         style={{ display: 'flex', alignItems: 'center' }}
                     >
                         <Icon size='large' name='box' />
-                        <span>All Products</span>
+                        <span>{t('all_products')}</span>
                     </Button>
                 </NavLink>
                 <NavLink to='/associations'>
@@ -161,7 +161,7 @@ export const NavBar = () => {
                         style={{ display: 'flex', alignItems: 'center' }}
                     >
                         <Icon size='large' name='tree' />
-                        <span>Associations</span>
+                        <span>{t('association')}</span>
                     </Button>
                 </NavLink>
                 {localStorage.getItem('FAIRREPACK_ADMIN') === "1" ?
@@ -176,7 +176,7 @@ export const NavBar = () => {
                                 style={{ display: 'flex', alignItems: 'center' }}
                             >
                                 <Icon size='large' name='certificate' />
-                                <span>Category</span>
+                                <span>{t('category')}</span>
                             </Button>
                         </NavLink>
                         <NavLink to='/backoffice/brands'>
@@ -189,7 +189,7 @@ export const NavBar = () => {
                                 style={{ display: 'flex', alignItems: 'center' }}
                             >
                                 <Icon size='large' name='building' />
-                                <span>Brands</span>
+                                <span>{t('brand')}</span>
                             </Button>
                         </NavLink>
                         <NavLink to='/backoffice/models'>
@@ -202,7 +202,7 @@ export const NavBar = () => {
                                 style={{ display: 'flex', alignItems: 'center' }}
                             >
                                 <Icon size='large' name='phone' />
-                                <span>Models</span>
+                                <span>{t('models')}</span>
                             </Button>
                         </NavLink>
                         <NavLink to='/backoffice/users'>
@@ -215,7 +215,7 @@ export const NavBar = () => {
                                 style={{ display: 'flex', alignItems: 'center' }}
                             >
                                 <Icon size='large' name='user' />
-                                <span>Users</span>
+                                <span>{t('users')}</span>
                             </Button>
                         </NavLink>
                         <NavLink to='/backoffice/offers'>
@@ -228,7 +228,7 @@ export const NavBar = () => {
                                 style={{ display: 'flex', alignItems: 'center' }}
                             >
                                 <Icon size='large' name='zip' />
-                                <span>Offers</span>
+                                <span>{t('offers')}</span>
                             </Button>
                         </NavLink></>
                     : <></>}
@@ -243,7 +243,7 @@ export const NavBar = () => {
                             style={{ display: 'flex', alignItems: 'center' }}
                         >
                             <Icon size='large' name='user' />
-                            <span>Your association</span>
+                            <span>{t('your_assoc')}</span>
                         </Button>
                     </NavLink>
                         <NavLink to='/you/association/projects'>
@@ -256,7 +256,7 @@ export const NavBar = () => {
                                 style={{ display: 'flex', alignItems: 'center' }}
                             >
                                 <Icon size='large' name='paw' />
-                                <span>Your projects</span>
+                                <span>{t('your_project')}</span>
                             </Button>
                         </NavLink></>
                     : <></>}

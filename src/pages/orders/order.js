@@ -13,7 +13,12 @@ import { GLOBAL } from '../../utils/functions/GLOBAL'
 import { OrderPDF } from '../../utils/components/pdf'
 import { PDFDownloadLink } from '@react-pdf/renderer';
 
+import { useTranslation } from 'react-i18next'
+
+
 export const Order = () => {
+    const [t] = useTranslation('common')
+
     const [orders, setOrders] = useState([])
     const [ord, setOrd] = useState({})
 
@@ -25,13 +30,12 @@ export const Order = () => {
         request(GLOBAL.URL + '/Order/' + id, 'GET').then(resp => setOrd(resp.order))
     }
 
-    console.log(ord)
 
     return (
-        <Wrapper title='Orders'>
+        <Wrapper title={t('orders')}>
             <InlineWrapper>
                 <ColumnWrapper>
-                    {orders.length === 0 ? <span>No orders :(</span> : orders.map(order => <OrderLine
+                    {orders.length === 0 ? <span>{t('no_orders')} :(</span> : orders.map(order => <OrderLine
                         orderId={order.idBuy}
                         totalprice={order.totalPrice + '€'}
                         status={order.payementStatus}
@@ -55,11 +59,13 @@ export const Order = () => {
 }
 
 const OrderLine = ({ orderId, totalprice, status, date, onClick }) => {
+    const [t] = useTranslation('common')
+
     return (
         <StyledContainer pointer onClick={onClick}>
             <InlineWrapper>
                 <span>
-                    Order <b>#{orderId}</b>
+                    {t('order')} <b>#{orderId}</b>
                 </span>
                 <span>
                     <b>{totalprice}</b>
@@ -76,12 +82,14 @@ const OrderLine = ({ orderId, totalprice, status, date, onClick }) => {
 }
 
 export const OrderResume = ({ orderId, products, totalprice, status, shippingAddress, date }) => {
+    const [t] = useTranslation('common')
+
     return (
         <ColumnWrapper>
-            <h5>Order #{orderId}</h5>
+            <h5>{t('order')} #{orderId}</h5>
             <InlineWrapper>
                 <span>
-                    Total Price: <b>{totalprice}</b>
+                    {t('total_price')}: <b>{totalprice}</b>
                 </span>
                 <span>
                     Status: <b>{status}</b>
@@ -104,7 +112,7 @@ export const OrderResume = ({ orderId, products, totalprice, status, shippingAdd
                         loading={loading}
                     >
                         <Icon size='large' name='download' />
-                        <span>Facture</span>
+                        <span>{t('bill')}</span>
                     </Button>
                 }
             </PDFDownloadLink>

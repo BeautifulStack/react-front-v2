@@ -11,9 +11,6 @@ import { request } from '../../utils/functions/request'
 import { GLOBAL } from '../../utils/functions/GLOBAL'
 import { useHistory } from 'react-router-dom'
 
-
-
-
 export const Association = () => {
     const [project, setProject] = useState([])
 
@@ -27,7 +24,6 @@ export const Association = () => {
         fetchAssoc()
     }, [])
 
-    console.log(project)
     return (
         <Wrapper title='Associations'>
             <ListWrapper >
