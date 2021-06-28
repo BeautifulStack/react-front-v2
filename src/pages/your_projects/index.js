@@ -12,7 +12,11 @@ export const YourProjects = () => {
     const [project, setProject] = useState(null)
 
     const updateProjects = () => {
-        request(GLOBAL.URL + '/Project/', 'GET').then(res => setProjects(res.projects));
+        request(GLOBAL.URL + '/Project/User', 'GET').then(res => {
+            if (res.status === 201) {
+                setProjects(res.projects)
+            } else console.log(res)
+        });
     }
 
     useEffect(() => {
@@ -40,7 +44,7 @@ export const YourProjects = () => {
                     </Button>
                     {projects.length === 0 ?
                         <span>No project</span> : projects.map(prod => <ProjectLine prod={prod} onDelete={() => {
-                        request(GLOBAL.URL + '/Project/Remove', 'POST', { idProject: prod.idProject }).then(() => updateProjects())
+                            request(GLOBAL.URL + '/Project/' + prod.idProject, 'DELETE').then(() => updateProjects())
 
                     }} showProject={() => {
                             request(GLOBAL.URL + '/Project/' + prod.idProject, 'GET').then(res => setProject(res.project))
@@ -49,7 +53,7 @@ export const YourProjects = () => {
                 <ColumnWrapper>
                     {project === null ? <></> :
                         <ProjectBox project={project} withdraw={() => {
-                            request(GLOBAL.URL + '/Project/Withdraw', 'POST', { idProject: project.idProject }).then(() => updateProjects())
+                            request(GLOBAL.URL + '/Project/' + project.idProject, 'PUT').then(() => updateProjects())
                         }}/>
                     }
                 </ColumnWrapper>
@@ -93,16 +97,15 @@ export const ProjectBox = ({project, withdraw}) => {
                 <span>
                     Description: <b>{project.description}</b>
                 </span>
-                <span>
-                    Goal: <b>{project.balance}/{project.objectif}</b>
-                </span>
+                {
+                    project.active === "0" ?
+                        <span> Success !</span> :
+                        <span>Goal: <b>{project.balance}/{project.objectif}</b></span>
+                }
+
                 <progress value={project.balance} max={project.objectif}/>
 
-                {
-                    project.balance >= project.objectif && project.active !== "1" ?
-                        <Button color='yellow' onClick={withdraw} >Withdraw</Button> :
-                        <Button color='yellow' onClick={withdraw} disabled>Withdraw</Button>
-                }
+                <Button color='yellow' onClick={withdraw} disabled={project.balance < project.objectif || project.active === "0"}>Withdraw</Button>
 
             </ColumnWrapper>
         </StyledContainer>
