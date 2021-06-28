@@ -12,9 +12,7 @@ import { useParams } from 'react-router-dom'
 
 import { useTranslation } from 'react-i18next'
 
-export const AssociationId = () => {
-    const [t] = useTranslation('common')
-
+export const ProjectId = () => {
     const [project, setProject] = useState([])
 
     let { id } = useParams();
@@ -28,7 +26,7 @@ export const AssociationId = () => {
     }, [])
 
     return (
-        <Wrapper title='Associations'>
+        <Wrapper title={project.name}>
 
             <MiddleContainer>
                 <ColumnWrapper>
@@ -46,5 +44,3 @@ export const AssociationId = () => {
         </Wrapper>
     )
 }
-
-

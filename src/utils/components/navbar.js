@@ -151,17 +151,17 @@ export const NavBar = () => {
                         <span>{t('all_products')}</span>
                     </Button>
                 </NavLink>
-                <NavLink to='/associations'>
+                <NavLink to='/projects'>
                     <Button
                         color={
-                            location.pathname === '/associations'
+                            location.pathname === '/projects'
                                 ? 'yellow'
                                 : ''
                         }
                         style={{ display: 'flex', alignItems: 'center' }}
                     >
                         <Icon size='large' name='tree' />
-                        <span>{t('association')}</span>
+                        <span>Projects</span>
                     </Button>
                 </NavLink>
                 {localStorage.getItem('FAIRREPACK_ADMIN') === "1" ?
@@ -233,32 +233,19 @@ export const NavBar = () => {
                         </NavLink></>
                     : <></>}
                 {localStorage.getItem('FAIRREPACK_ADMIN') === "2" ?
-                    <><NavLink to='/you/association'>
-                        <Button
-                            color={
-                                location.pathname === '/you/association'
-                                    ? 'yellow'
-                                    : ''
-                            }
-                            style={{ display: 'flex', alignItems: 'center' }}
-                        >
-                            <Icon size='large' name='user' />
-                            <span>{t('your_assoc')}</span>
-                        </Button>
-                    </NavLink>
-                        <NavLink to='/you/association/projects'>
+                    <NavLink to='/your_projects'>
                             <Button
                                 color={
-                                    location.pathname === '/you/association/projects'
+                                    location.pathname === '/your_projects'
                                         ? 'yellow'
                                         : ''
                                 }
                                 style={{ display: 'flex', alignItems: 'center' }}
                             >
-                                <Icon size='large' name='paw' />
-                                <span>{t('your_project')}</span>
+                                <Icon size='large' name='user' />
+                                <span>Your projects</span>
                             </Button>
-                        </NavLink></>
+                        </NavLink>
                     : <></>}
             </div>
         </div>

@@ -9,8 +9,8 @@ import { Sells, NewSell } from './pages/sell/index'
 
 import { Cart } from './pages/cart/cart'
 import { Order } from './pages/orders/order'
-import { Association } from './pages/associations/index'
-import { AssociationId } from './pages/associations/assoc'
+import { Projects } from './pages/projects/index'
+import { ProjectId } from './pages/projects/project'
 
 import { Register } from './pages/account/register'
 import { Login } from './pages/account/login'
@@ -21,6 +21,8 @@ import { BackofficeOffers } from './backoffice/offers'
 import { BackofficeCategories } from './backoffice/categories'
 import { BackofficeBrands } from './backoffice/brands'
 import { BackofficeModels } from './backoffice/models'
+import {YourProjects} from "./pages/your_projects";
+import {NewProject} from "./pages/your_projects/new_project";
 
 function App() {
     return (
@@ -29,8 +31,8 @@ function App() {
                 <NavBar />
                 <Switch>
                     <Route exact path='/home' component={Home} />
-                    <Route exact path='/associations' component={Association} />
-                    <Route exact path='/associations/:id' component={AssociationId} />
+                    <Route exact path='/projects' component={Projects} />
+                    <Route exact path='/projects/:id' component={ProjectId} />
 
                     <Route exact path='/search/:search' component={Products} />
                     <Route exact path='/products' component={Products} />
@@ -48,6 +50,9 @@ function App() {
 
                     <Route exact path='/backoffice/users' component={BackofficeUser} />
                     <Route exact path='/backoffice/offers' component={BackofficeOffers} />
+
+                    <Route exact path='/your_projects' component={YourProjects} />
+                    <Route exact path='/new_project' component={NewProject} />
 
                     <Route path='/' component={Home} />
                 </Switch>
