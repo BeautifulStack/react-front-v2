@@ -13,6 +13,8 @@ import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 export const ProjectId = () => {
+    const [t] = useTranslation('common')
+
     const [project, setProject] = useState([])
 
     let { id } = useParams();

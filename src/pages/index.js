@@ -5,10 +5,11 @@ import background from './../images/Background.webp'
 import packaging from './../images/packaging.webp'
 import { request } from './../utils/functions/request'
 import { useTranslation } from 'react-i18next'
+import { useHistory } from 'react-router-dom'
 
-export const Box = ({ name }) => {
+export const Box = ({ name, onClick }) => {
     return (
-        <div className='Box'>
+        <div className='Box' onClick={onClick}>
             <div>G</div>
             <span>{name}</span>
         </div>
@@ -26,6 +27,7 @@ function getWindowDimensions() {
 export const Home = () => {
     const [t] = useTranslation('common')
 
+    const history = useHistory()
 
     const [windowDimensions, setWindowDimensions] = useState(
         getWindowDimensions()
@@ -76,7 +78,7 @@ export const Home = () => {
         return () => window.removeEventListener('resize', handleResize)
     }, [])
 
-    console.log(box)
+
     return (
         <div className='home'>
             <div
@@ -171,7 +173,7 @@ export const Home = () => {
                 </div>
                 <div className='categorySelecter'>
                     {categories.map((category, i) => (
-                        <Box key={i} name={category.categoryName} />
+                        <Box key={i} name={category.categoryName} onClick={() => history.push('/products/category/' + category.idCategory)} />
                     ))}
                 </div>
             </div>
@@ -187,7 +189,7 @@ export const Home = () => {
                 </div>
                 <div className='categorySelecter'>
                     {brands.map((brand, i) => (
-                        <Box key={i} name={brand.brandName} />
+                        <Box key={i} name={brand.brandName} onClick={() => history.push('/products/brand/' + brand.idBrand)} />
                     ))}
                 </div>
             </div>

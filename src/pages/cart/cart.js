@@ -51,7 +51,7 @@ export const Cart = () => {
         <Wrapper title='Cart'>
             <InlineWrapper>
                 <ColumnWrapper>
-                    {shoppingCart.length === 0 ? <span>No product in Cart</span> : shoppingCart.map(prod => <CartLine deletable model={prod.modelName} brand={prod.brandName} price={prod.resellPrice + '€'} onClick={() => {
+                    {shoppingCart.length === 0 ? <span>No product in Cart</span> : shoppingCart.map(prod => <CartLine deletable model={prod.modelName} brand={prod.brandName} price={prod.resellPrice} onClick={() => {
                         request(GLOBAL.URL + '/Product/Remove', 'POST', { idProduct: prod.idProduct }).then(() => updateCart())
 
                     }} />)}
@@ -65,18 +65,19 @@ export const Cart = () => {
                             </InlineWrapper>
                         </ColumnWrapper>
                     </StyledContainer>
-                    <StyledContainer>
-                        <ColumnWrapper>
-                            <h5>{t('payement')}</h5>
+
+                    {shoppingCart.length !== 0 ? <StyledContainer>
+                        <ColumnWrapper><h5>{t('payement')}</h5>
                             <Elements stripe={stripePromise}>
                                 <PayementForm />
 
 
 
 
-                            </Elements>
-                        </ColumnWrapper>
-                    </StyledContainer>
+                            </Elements></ColumnWrapper>
+                    </StyledContainer> : <></>}
+
+
                 </ColumnWrapper>
             </InlineWrapper>
         </Wrapper>

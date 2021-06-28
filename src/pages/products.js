@@ -5,6 +5,7 @@ import { Icon, Button } from 'semantic-ui-react'
 import { GLOBAL } from '../utils/functions/GLOBAL'
 import { request } from './../utils/functions/request'
 import { useTranslation } from 'react-i18next'
+import { useLocation, useParams } from 'react-router-dom'
 
 const ProductBox = ({ id, brand, model, description }) => {
     const [t] = useTranslation('common')
@@ -49,15 +50,28 @@ const ProductBox = ({ id, brand, model, description }) => {
 export const Products = () => {
     const [t] = useTranslation('common')
 
+    const param = useParams()
+    console.log(param)
+
+
     const [products, setProducts] = useState([])
 
     useEffect(() => {
         async function fetchData() {
-            const res = await request(
-                GLOBAL.URL + '/Product/',
-                'GET'
-            )
-            setProducts(res.products)
+            if (!param.search) {
+                const res = await request(
+                    GLOBAL.URL + '/Product/',
+                    'GET'
+                )
+                setProducts(res.products)
+            } else {
+                const res = await request(
+                    GLOBAL.URL + '/Product/?' + param.search + "=" + param.id,
+                    'GET'
+                )
+                setProducts(res.products)
+            }
+
         }
         fetchData()
     }, [])

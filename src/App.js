@@ -21,8 +21,8 @@ import { BackofficeOffers } from './backoffice/offers'
 import { BackofficeCategories } from './backoffice/categories'
 import { BackofficeBrands } from './backoffice/brands'
 import { BackofficeModels } from './backoffice/models'
-import {YourProjects} from "./pages/your_projects";
-import {NewProject} from "./pages/your_projects/new_project";
+import { YourProjects } from "./pages/your_projects";
+import { NewProject } from "./pages/your_projects/new_project";
 
 function App() {
     return (
@@ -34,7 +34,7 @@ function App() {
                     <Route exact path='/projects' component={Projects} />
                     <Route exact path='/projects/:id' component={ProjectId} />
 
-                    <Route exact path='/search/:search' component={Products} />
+                    <Route exact path='/products/:search/:id' component={Products} />
                     <Route exact path='/products' component={Products} />
                     <Route exact path='/sells' component={Sells} />
                     <Route exact path='/sells/new' component={NewSell} />
