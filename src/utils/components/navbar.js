@@ -1,19 +1,23 @@
 import { useState } from 'react'
 import { NavLink, useHistory, useLocation } from 'react-router-dom'
 import { Input, Icon, Button, Dropdown } from 'semantic-ui-react'
+import { useTranslation } from 'react-i18next'
 
 export const NavBar = () => {
+    const [_t, i18n] = useTranslation('common')
+
+
     const languages = [
         {
             key: 'french',
             text: 'Français',
-            value: 'french',
+            value: 'fr',
             flag: 'fr',
         },
         {
             key: 'english',
             text: 'English',
-            value: 'English',
+            value: 'en',
             flag: 'us',
         },
     ]
@@ -76,6 +80,7 @@ export const NavBar = () => {
                                 name='external share'
                                 onClick={() => {
                                     localStorage.removeItem('FAIRREPACK_TOKEN')
+                                    localStorage.removeItem('FAIRREPACK_ADMIN')
                                     history.push('/login')
                                 }}
                             />
@@ -118,6 +123,7 @@ export const NavBar = () => {
                         labeled
                         icon='world'
                         options={languages}
+                        onChange={(_e, { value }) => i18n.changeLanguage(value)}
                     />
                 </div>
             </div>

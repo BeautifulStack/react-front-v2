@@ -49,7 +49,7 @@ export const Products = () => {
     useEffect(() => {
         async function fetchData() {
             const res = await request(
-                'http://localhost/php-back2/Product/',
+                GLOBAL.URL + '/Product/',
                 'GET'
             )
             setProducts(res.products)

@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import { Button, Icon } from 'semantic-ui-react'
+import { GLOBAL } from '../utils/functions/GLOBAL'
 import background from './../images/Background.webp'
 import packaging from './../images/packaging.webp'
 import { request } from './../utils/functions/request'
@@ -33,7 +34,7 @@ export const Home = () => {
     useEffect(() => {
         async function fetchData() {
             const res = await request(
-                'http://localhost/php-back2/Brand/',
+                GLOBAL.URL + '/Brand/',
                 'GET'
             )
             setBrands(res.brands)
@@ -44,7 +45,7 @@ export const Home = () => {
     useEffect(() => {
         async function fetchData() {
             const res = await request(
-                'http://localhost/php-back2/Category/',
+                GLOBAL.URL + '/Category/',
                 'GET'
             )
             setCategories(res.categories)

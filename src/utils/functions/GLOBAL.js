@@ -1,3 +1,3 @@
 export const GLOBAL = {
-    URL: 'http://localhost/php-back2'
+    URL: 'http://localhost/api'
 }
