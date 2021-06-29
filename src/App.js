@@ -34,21 +34,27 @@ function App() {
                     <Route exact path='/home' component={Home} />
                     <Route exact path='/projects' component={Projects} />
                     <Route exact path='/projects/:id' component={ProjectId} />
+                    <Route exact path='/login' component={Login} />
+                    <Route exact path='/register' component={Register} />
 
+                    {localStorage.getItem("FAIRREPACK_TOKEN") ?
+                        <>
+                            <Route exact path='/sells' component={Sells} />
+                            <Route exact path='/sells/new' component={NewSell} />
+                            <Route exact path='/order' component={Order} />
+                            <Route exact path='/cart' component={Cart} />
+
+                            <Route exact path='/account' component={Update} />
+
+                            <Route exact path='/backoffice/categories' component={BackofficeCategories} />
+                            <Route exact path='/backoffice/brands' component={BackofficeBrands} />
+                            <Route exact path='/backoffice/models' component={BackofficeModels} />
+                        </> :
+                        <><Route path='/' component={Login} /></>}
                     <Route exact path='/validate/:id' component={Validator} />
                     <Route exact path='/products/:search/:id' component={Products} />
                     <Route exact path='/products' component={Products} />
-                    <Route exact path='/sells' component={Sells} />
-                    <Route exact path='/sells/new' component={NewSell} />
-                    <Route exact path='/order' component={Order} />
-                    <Route exact path='/cart' component={Cart} />
-                    <Route exact path='/login' component={Login} />
-                    <Route exact path='/register' component={Register} />
-                    <Route exact path='/account' component={Update} />
 
-                    <Route exact path='/backoffice/categories' component={BackofficeCategories} />
-                    <Route exact path='/backoffice/brands' component={BackofficeBrands} />
-                    <Route exact path='/backoffice/models' component={BackofficeModels} />
 
                     <Route exact path='/backoffice/users' component={BackofficeUser} />
                     <Route exact path='/backoffice/offers' component={BackofficeOffers} />
