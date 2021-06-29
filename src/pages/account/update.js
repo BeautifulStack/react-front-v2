@@ -7,7 +7,7 @@ import { request } from '../../utils/functions/request'
 import {
     ColumnWrapper,
     Wrapper,
-} from './../../utils/components/wrapper'
+} from '../../utils/components/wrapper'
 
 import { useTranslation } from 'react-i18next'
 
@@ -23,7 +23,7 @@ export const Update = () => {
         request(GLOBAL.URL + "/User/Address", 'GET').then((res) => {
             if (res.status === 201) {
                 setOldAddress(res.address)
-                setGood(true)
+
             }
         })
     }
@@ -35,6 +35,7 @@ export const Update = () => {
     const updatePukKey = () => {
         request(GLOBAL.URL + '/User/Update', 'POST', { publicKey: pubKey }).then(resp => {
             localStorage.setItem('FAIRREPACK_TOKEN', resp.token)
+            setGood(true)
         })
     }
     return <Wrapper title={t('address')}>

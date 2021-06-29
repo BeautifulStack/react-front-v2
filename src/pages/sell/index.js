@@ -37,7 +37,8 @@ export const Sells = () => {
 
     useEffect(() => {
         request(GLOBAL.URL + '/Offer/', 'GET').then((response) => {
-            setOffer(response.offers)
+            if (response.status === 201)
+                setOffer(response.offers)
         })
     }, [])
 
@@ -45,7 +46,8 @@ export const Sells = () => {
         setClicked(false)
         if (offerProps.idSell !== -1) {
             request(GLOBAL.URL + '/Offer/' + offerProps.idSell, 'GET').then((response) => {
-                setProposition(response.proposition)
+                if (response.status === 201)
+                    setProposition(response.proposition)
             })
 
         }
@@ -105,64 +107,55 @@ export const Sells = () => {
                 </ColumnWrapper>
                 <StyledContainer>
                     <ColumnWrapper>
-                        <h3>{t('offer')} #{offerProps.idSell}</h3>
-                        <span>{offerProps.date}</span>
-                        <span>
-                            Status: <b>{offerProps.status}</b>
-                        </span>
-                        <PDFDownloadLink document={<OfferPDF filename="facture" id={offerProps.idSell} date={offerProps.date} shippingAddress={offerProps.location + " " + offerProps.address} />} fileName="facture.pdf">
+                        {offerProps.idSell !== -1 ? <>
+                            <h3>{t('offer')} #{offerProps.idSell}</h3>
+                            <span>{offerProps.date}</span>
+                            <span>
+                                Status: <b>{offerProps.status}</b>
+                            </span>
 
-                            {({ loading }) =>
-                                loading ? t('generating') : <Button
-                                    color={
-                                        'yellow'
-                                    }
-                                    style={{ marginTop: '1em' }}
-                                >
-                                    <Icon size='large' name='download' />
-                                    <span>{t('delivery_sheet')}</span>
-                                </Button>
-                            }
-                        </PDFDownloadLink>
-                        <div className='offerResumeHistory'>
-                            <h5>{t('history')}: </h5>
-                            <div className='scroller'>
-                                {propositions.length === 0 ? <span>{t('no_offer')}</span> :
-                                    propositions.map((pro, i) => <HistoryLine
-                                        status={pro.status}
-                                        date={pro.date}
-                                        price={pro.price + '€'}
-                                        comment={pro.comment}
-                                    />)}
+                            <PDFDownloadLink document={<OfferPDF filename="facture" id={offerProps.idSell} date={offerProps.date} shippingAddress={offerProps.location + " " + offerProps.address} />} fileName="facture.pdf">
 
-                                {/* <CounterOffer /> */}
+                                {({ loading }) =>
+                                    loading ? t('generating') : <Button
+                                        color={
+                                            'yellow'
+                                        }
+                                        style={{ marginTop: '1em' }}
+                                    >
+                                        <Icon size='large' name='download' />
+                                        <span>{t('delivery_sheet')}</span>
+                                    </Button>
+                                }
+                            </PDFDownloadLink>
+                            <div className='offerResumeHistory'>
+                                <h5>{t('history')}: </h5>
+                                <div className='scroller'>
+                                    {propositions.length === 0 ? <span>{t('no_offer')}</span> :
+                                        propositions.map((pro, i) => <HistoryLine
+                                            status={pro.status}
+                                            date={pro.date}
+                                            price={pro.price + '€'}
+                                            comment={pro.comment}
+                                            proposedBy={pro.proposedBy}
+                                        />)}
+
+                                    {/* <CounterOffer /> */}
+                                </div>
+                                {propositions.length !== 0 && propositions[0].proposedBy === "0" ? <span>We are examinating your offer</span> : <InlineWrapper>
+                                    {clicked ? <><Button color='yellow' onClick={acceptOffer}>Accept</Button>{' '}
+                                        <Button onClick={counterOffer}>Counter Offer</Button>{' '}
+                                        <Button color='red' onClick={denyOffer}>Deny</Button></> : <Button color='yellow' onClick={() => setClicked(true)}>Answer</Button>}
+
+                                </InlineWrapper>}
+
                             </div>
-                            {propositions.length !== 0 && propositions[0].proposedBy === "0" ? <span>We are examinating your offer</span> : <InlineWrapper>
-                                {clicked ? <><Button color='yellow' onClick={acceptOffer}>Accept</Button>{' '}
-                                    <Button onClick={counterOffer}>Counter Offer</Button>{' '}
-                                    <Button color='red' onClick={denyOffer}>Deny</Button></> : <Button color='yellow' onClick={() => setClicked(true)}>Answer</Button>}
+                        </> : <span>Please Select Sell</span>}
 
-                            </InlineWrapper>}
-
-                        </div>
                     </ColumnWrapper>
                 </StyledContainer>
             </InlineWrapper>
         </Wrapper>
-    )
-}
-
-const CounterOffer = () => {
-    return (
-        <ColumnWrapper>
-            <Form style={{ marginBottom: '1em' }}>
-                <TextArea placeholder='Tell us more' />
-            </Form>
-            <InlineWrapper>
-                <Input placeholder='New Price...' />
-                <Button>Send</Button>
-            </InlineWrapper>
-        </ColumnWrapper>
     )
 }
 
@@ -189,7 +182,7 @@ const OfferLine = ({ offerId, status, date, price, onClick }) => {
     )
 }
 
-const HistoryLine = ({ status, date, price, comment }) => {
+const HistoryLine = ({ status, date, price, comment, proposedBy }) => {
     return (
         <div
 
@@ -204,7 +197,7 @@ const HistoryLine = ({ status, date, price, comment }) => {
         >
             <span>{date}</span>
             <span>{status}</span>
-            <Icon name="zoom" onClick={() => alert("Our team said: " + comment)} style={{ cursor: "pointer" }} />
+            <Icon name="zoom" onClick={() => alert((proposedBy !== 0 ? "Our team said: " : "You said:") + comment)} style={{ cursor: "pointer" }} />
             <span>{price}</span>
         </div>
     )
@@ -247,7 +240,7 @@ export const NewSell = () => {
 
 
     const slide = (e, a) => {
-        const position = (sliderRef.current.scrollHeight - sliderRef.current.offsetHeight / 2) * e
+        const position = ((sliderRef.current.scrollHeight - sliderRef.current.offsetHeight) / 2) * e
         setActive(e)
         const newValidate = [...validate]
         newValidate[a] = 1
@@ -259,13 +252,16 @@ export const NewSell = () => {
     useEffect(() => {
         async function fetchData() {
             request(GLOBAL.URL + '/Category/').then((res) => {
-                setFetchedDatas((data) => ({ ...data, categories: res.categories }))
+                if (res.status === 201)
+                    setFetchedDatas((data) => ({ ...data, categories: res.categories }))
             })
             request(GLOBAL.URL + '/Brand/').then((res) => {
-                setFetchedDatas((data) => ({ ...data, brands: res.brands }))
+                if (res.status === 201)
+                    setFetchedDatas((data) => ({ ...data, brands: res.brands }))
             })
             request(GLOBAL.URL + '/Model/').then((res) => {
-                setFetchedDatas((data) => ({ ...data, models: res.models }))
+                if (res.status === 201)
+                    setFetchedDatas((data) => ({ ...data, models: res.models }))
             })
 
         }

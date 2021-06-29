@@ -5,7 +5,7 @@ import { Button, Select, Input } from 'semantic-ui-react'
 import { useState, useEffect, useRef } from 'react'
 import { request } from '../utils/functions/request'
 import { GLOBAL } from '../utils/functions/GLOBAL'
-import { FileDisplay } from './../pages/sell/index'
+import { FileDisplay } from '../pages/sell/index'
 import { useHistory } from 'react-router-dom'
 import { logout } from '../utils/functions/userManagement'
 

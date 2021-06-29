@@ -22,7 +22,8 @@ export const Projects = () => {
     useEffect(() => {
         async function fetchAssoc() {
             const response = await request(GLOBAL.URL + '/Project/', 'GET');
-            setProject(response.projects)
+            if (response.status === 201)
+                setProject(response.projects)
         }
         fetchAssoc()
     }, [])

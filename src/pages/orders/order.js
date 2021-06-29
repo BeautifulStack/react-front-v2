@@ -23,11 +23,17 @@ export const Order = () => {
     const [ord, setOrd] = useState(null)
 
     useEffect(() => {
-        request(GLOBAL.URL + '/Order/', 'GET').then(resp => setOrders(resp.orders))
+        request(GLOBAL.URL + '/Order/', 'GET').then((resp) => {
+            if (resp.status === 201)
+                setOrders(resp.orders)
+        })
     }, [])
 
     const getOrder = async (id) => {
-        request(GLOBAL.URL + '/Order/' + id, 'GET').then(resp => setOrd(resp.order))
+        request(GLOBAL.URL + '/Order/' + id, 'GET').then((resp) => {
+            if (resp.status === 201)
+                setOrd(resp.order)
+        })
     }
 
 
