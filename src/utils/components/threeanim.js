@@ -1,8 +1,10 @@
-import React, { Component, useRef } from "react";
+import React, {Component, useEffect, useRef, useState} from "react";
 import ReactDOM from "react-dom";
 import * as THREE from "three";
 import * as dat from 'dat.gui'
 import gsap from 'gsap'
+import {GLOBAL} from "../functions/GLOBAL";
+import {request} from "../functions/request";
 
 export class ThreeJS extends Component {
 
@@ -173,14 +175,44 @@ export class ThreeJS extends Component {
 
         return (
             <div>
-                <div class="webgl-div-title">
-                    <h3 style={{ fontSize: '34px' }}>FairRepack - Smart Shop</h3>
-                    <span style={{ fontSize: '24px', textAlign: 'left' }}>Lorem dqzdqzd qlzdqzdqhjzjhdqhjzd hjqklzdjhkqzhjdjhqjjqjdjzhdkqhzdkjqhzdh qklzhdkjqhzdkljqhzkldqlzhklqzhdlkzhd kqzhdkqjzhdkqzhd</span>
-                </div>
+                <About />
                 <canvas class="webgl">
 
                 </canvas>
             </div>
         )
     }
+}
+
+export const About = () => {
+    const [money, setMoney] = useState(0)
+
+    const getMoney = () => {
+        request("https://blockchain.octobyte.cloud/balance/WITHDRAW", 'GET').then(res => setMoney(res.balance))
+    }
+
+    useEffect(() => {
+        getMoney()
+    }, [])
+
+    return (
+        <div className="webgl-div-title">
+            <h3 style={{ fontSize: '34px', marginTop: '250px' }}>FairRepack - Smart Shop</h3>
+            <br/>
+            <div style={{ fontSize: '24px', textAlign: 'left' }}>
+                FairRepack is about <b>Community and Tegridy</b> !<br/>
+                <br/>
+                Sell us your products you don't use anymore or are broken.<br/>
+                Buy us our reconditioned products and give them a second life.<br/>
+                <br/>
+                By shopping on our site, and link your address from the<br/>
+                mobile application, you can earn some Green Coins that<br/>
+                you can redistribute to the association's project of your<br/>
+                choice !<br/>
+                <br/>
+                For now, we gathered <b>{money} EUR</b> that been reversed to<br/>
+                different associations of yours.<br/>
+            </div>
+        </div>
+    )
 }
