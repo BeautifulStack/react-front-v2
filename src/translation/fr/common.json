@@ -46,5 +46,6 @@
     "assoc_name": "Nom de l'Association",
     "address": "Adresse",
     "enter_address": "Entrez votre adresse afin de recevoir vos Greencoins",
-    "confirm": "Confirmation"
+    "confirm": "Confirmation",
+    "no_products": "Pas de produits correspondant"
 }

@@ -43,7 +43,8 @@ export const Home = () => {
                 GLOBAL.URL + '/Brand/',
                 'GET'
             )
-            setBrands(res.brands)
+            if (res.status === 201)
+                setBrands(res.brands)
         }
         fetchData()
     }, [])
@@ -54,7 +55,8 @@ export const Home = () => {
                 GLOBAL.URL + '/Category/',
                 'GET'
             )
-            setCategories(res.categories)
+            if (res.status === 201)
+                setCategories(res.categories)
         }
         fetchData()
     }, [])

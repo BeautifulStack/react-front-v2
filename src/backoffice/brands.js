@@ -7,12 +7,16 @@ import { request } from '../utils/functions/request'
 import { GLOBAL } from '../utils/functions/GLOBAL'
 
 import { useTranslation } from 'react-i18next'
+import { logout } from '../utils/functions/userManagement'
+import { useHistory } from 'react-router-dom'
 
 export const BackofficeBrands = () => {
     const [t] = useTranslation('common')
 
     const [brands, setBrands] = useState([])
     const [brandName, setBrandName] = useState('')
+
+    const history = useHistory()
 
     const getBrands = () => {
         request(GLOBAL.URL + '/Brand/', 'GET').then((res) => {
@@ -31,6 +35,9 @@ export const BackofficeBrands = () => {
             if (res.status === 201) {
                 getBrands()
                 setBrandName('')
+            } else {
+                logout()
+                history.push('/login')
             }
         })
     }

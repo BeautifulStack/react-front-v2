@@ -7,12 +7,16 @@ import { request } from '../utils/functions/request'
 import { GLOBAL } from '../utils/functions/GLOBAL'
 
 import { useTranslation } from 'react-i18next'
+import { logout } from '../utils/functions/userManagement'
+import { useHistory } from 'react-router-dom'
 
 export const BackofficeCategories = () => {
     const [t] = useTranslation('common')
 
     const [categories, setCategories] = useState([])
     const [categoryName, setCategoryName] = useState('')
+
+    const history = useHistory()
 
     const getCategories = () => {
         request(GLOBAL.URL + '/Category/', 'GET').then((res) => {
@@ -31,6 +35,9 @@ export const BackofficeCategories = () => {
             if (res.status === 201) {
                 getCategories()
                 setCategoryName('')
+            } else {
+                logout()
+                history.push('/login')
             }
         })
     }

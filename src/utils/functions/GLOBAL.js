@@ -1,3 +1,3 @@
 export const GLOBAL = {
-    URL: 'http://localhost/api'
+    URL: 'https://api.patedesable.eu'
 }

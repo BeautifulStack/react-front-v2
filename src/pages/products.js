@@ -63,13 +63,15 @@ export const Products = () => {
                     GLOBAL.URL + '/Product/',
                     'GET'
                 )
-                setProducts(res.products)
+                if (res.status === 201)
+                    setProducts(res.products)
             } else {
                 const res = await request(
                     GLOBAL.URL + '/Product/?' + param.search + "=" + param.id,
                     'GET'
                 )
-                setProducts(res.products)
+                if (res.status === 201)
+                    setProducts(res.products)
             }
 
         }
@@ -82,6 +84,8 @@ export const Products = () => {
                 <h3>{t('all_products')}</h3>
             </div>
             <div className='productContainer'>
+                {products.length > 0 ? <></> : <span>{t('no_products')}</span>}
+
                 {products.map((product, i) => (
                     <ProductBox
                         key={i}

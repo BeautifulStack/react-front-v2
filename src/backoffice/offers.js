@@ -7,17 +7,23 @@ import { request } from '../utils/functions/request'
 import { GLOBAL } from '../utils/functions/GLOBAL'
 
 import { useTranslation } from 'react-i18next'
+import { logout } from '../utils/functions/userManagement'
+import { useHistory } from 'react-router-dom'
 
 export const BackofficeOffers = () => {
     const [t] = useTranslation('common')
 
     const [offers, setOffer] = useState([])
 
+    const history = useHistory()
+
     useState(() => {
         request(GLOBAL.URL + '/Offer/All', 'GET').then((res) => {
             if (res.status === 201) {
                 setOffer(res.offers)
             }
+
+
         })
     }, [])
 
@@ -42,6 +48,8 @@ export const BackofficeOffers = () => {
 }
 
 const OfferLine = ({ idSell, date, model, brand, price, idOffer, idUser }) => {
+    const history = useHistory()
+
     const [clicked, setClicked] = useState(false)
 
     const acceptOffer = () => {
@@ -49,7 +57,15 @@ const OfferLine = ({ idSell, date, model, brand, price, idOffer, idUser }) => {
     }
 
     const denyOffer = () => {
-        request(GLOBAL.URL + '/Offer/AdminProposition', 'POST', { idOffer, idSell, status: "deny" }).then(() => window.location.reload())
+        request(GLOBAL.URL + '/Offer/AdminProposition', 'POST', { idOffer, idSell, status: "deny" }).then((res) => {
+            if (res.status === 201) {
+                window.location.reload()
+
+            } else {
+                logout()
+                history.push('/login')
+            }
+        })
     }
 
     const newOffer = () => {

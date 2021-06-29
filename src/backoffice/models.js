@@ -7,6 +7,7 @@ import { request } from '../utils/functions/request'
 import { GLOBAL } from '../utils/functions/GLOBAL'
 import { FileDisplay } from './../pages/sell/index'
 import { useHistory } from 'react-router-dom'
+import { logout } from '../utils/functions/userManagement'
 
 export const BackofficeModels = () => {
     const [models, setModels] = useState([])
@@ -21,6 +22,7 @@ export const BackofficeModels = () => {
             if (res.status === 201) {
                 setModels(res.models)
             } else {
+                logout()
                 history.push('/login')
             }
         })
@@ -29,9 +31,6 @@ export const BackofficeModels = () => {
     useState(() => {
         fetchModels()
     }, [])
-
-
-    console.log(models)
     return (
         <Wrapper title="Models">
             <InlineWrapper>
