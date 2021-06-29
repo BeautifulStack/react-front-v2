@@ -1,16 +1,17 @@
 import { useRef, useState, useEffect } from 'react'
-import { Button, Icon } from 'semantic-ui-react'
+// import { Button, Icon } from 'semantic-ui-react'
 import { GLOBAL } from '../utils/functions/GLOBAL'
-import background from './../images/Background.webp'
-import packaging from './../images/packaging.webp'
+// import background from './../images/Background.webp'
+// import packaging from './../images/packaging.webp'
 import { request } from './../utils/functions/request'
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
 
-export const Box = ({ name, onClick }) => {
+
+export const Box = ({ name, onClick, type }) => {
     return (
         <div className='Box' onClick={onClick}>
-            <div>G</div>
+            <div>{type}</div>
             <span>{name}</span>
         </div>
     )
@@ -83,7 +84,7 @@ export const Home = () => {
 
     return (
         <div className='home'>
-            <div
+            {/* <div
                 style={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -162,7 +163,7 @@ export const Home = () => {
                         </span>
                     </div>
                 )}
-            </div>
+            </div> */}
             <div className='categoryBrowse'>
                 <div
                     style={{
@@ -175,7 +176,7 @@ export const Home = () => {
                 </div>
                 <div className='categorySelecter'>
                     {categories.map((category, i) => (
-                        <Box key={i} name={category.categoryName} onClick={() => history.push('/products/category/' + category.idCategory)} />
+                        <Box key={i} name={category.categoryName} type={t('category')} onClick={() => history.push('/products/category/' + category.idCategory)} />
                     ))}
                 </div>
             </div>
@@ -191,7 +192,7 @@ export const Home = () => {
                 </div>
                 <div className='categorySelecter'>
                     {brands.map((brand, i) => (
-                        <Box key={i} name={brand.brandName} onClick={() => history.push('/products/brand/' + brand.idBrand)} />
+                        <Box key={i} name={brand.brandName} type={t('brand')} onClick={() => history.push('/products/brand/' + brand.idBrand)} />
                     ))}
                 </div>
             </div>

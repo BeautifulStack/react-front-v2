@@ -324,6 +324,14 @@ a.active:not(.step) > * {
     margin: auto 1em;
 }
 
+.threejs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: none;
+    background: white;
+}
+
 @media (max-width: 1700px) {
     .account-management {
         width: 25%;

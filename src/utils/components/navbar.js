@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { NavLink, useHistory, useLocation } from 'react-router-dom'
+import { NavLink, useHistory, useLocation, Link } from 'react-router-dom'
 import { Input, Icon, Button, Dropdown } from 'semantic-ui-react'
 import { useTranslation } from 'react-i18next'
 
@@ -121,6 +121,15 @@ export const NavBar = () => {
                         <span>{t('home')}</span>
                     </Button>
                 </NavLink>
+                <Link to='/animation' target="_blank">
+                    <Button
+                        color={location.pathname === '/animation' ? 'yellow' : ''}
+                        style={{ display: 'flex', alignItems: 'center' }}
+                    >
+                        <Icon size='large' name='meh' />
+                        <span>Animation</span>
+                    </Button>
+                </Link>
                 <NavLink to='/products'>
                     <Button
                         color={

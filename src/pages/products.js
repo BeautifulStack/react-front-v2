@@ -3,33 +3,37 @@ import { useEffect } from 'react'
 import { useHistory } from 'react-router'
 import { Icon, Button } from 'semantic-ui-react'
 import { GLOBAL } from '../utils/functions/GLOBAL'
-import { request } from './../utils/functions/request'
+import { request } from '../utils/functions/request'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useParams } from 'react-router-dom'
 
-const ProductBox = ({ id, brand, model, description, image }) => {
+const ProductBox = ({ id, brand, model, description, image, idBrand }) => {
     const [t] = useTranslation('common')
 
     const history = useHistory()
+
+    const [loading, setLoading] = useState(false)
 
     return (
         <div
             className='productBox'
             onClick={(e) => {
                 e.stopPropagation()
-                history.push('/product/' + id)
+                history.push('/product/brand/' + idBrand)
             }}
         >
             <img
                 width='100px'
                 src={GLOBAL.URL + '/Images/' + image}
-                alt='missing Photos :('
+                alt='Missing Photos'
             />
             <span style={{ fontWeight: 'bold' }}>
                 {brand} - {model}
             </span>
             <span>{description}</span>
             <Button
+                loading={loading}
+                disabled={loading}
                 color='yellow'
                 style={{
                     display: 'flex',
@@ -37,7 +41,11 @@ const ProductBox = ({ id, brand, model, description, image }) => {
                 }}
                 onClick={(e) => {
                     e.stopPropagation()
-                    request(GLOBAL.URL + '/Product/AddToCart', 'POST', { idProduct: id }).then(() => history.push('/cart'))
+                    setLoading(true)
+                    request(GLOBAL.URL + '/Product/AddToCart', 'POST', { idProduct: id }).then(() => {
+                        setLoading(false)
+                        history.push('/cart')
+                    })
                 }}
             >
                 <Icon size='large' name='cart' />
@@ -88,6 +96,7 @@ export const Products = () => {
 
                 {products.map((product, i) => (
                     <ProductBox
+                        idBrand={product.idBrand}
                         key={i}
                         id={product.idProduct}
                         brand={product.brandName}
@@ -99,54 +108,6 @@ export const Products = () => {
                     />
                 ))}
 
-                {/* <ProductBox
-                    id='2'
-                    brand='Apple'
-                    model='Iphone X'
-                    image='z'
-                    description='description'
-                    link='Link'
-                />
-                <ProductBox
-                    id='2'
-                    brand='Apple'
-                    model='Iphone X'
-                    image='z'
-                    description='description'
-                    link='Link'
-                />
-                <ProductBox
-                    id='2'
-                    brand='Apple'
-                    model='Iphone X'
-                    image='z'
-                    description='description'
-                    link='Link'
-                />
-                <ProductBox
-                    id='2'
-                    brand='Apple'
-                    model='Iphone X'
-                    image='z'
-                    description='description'
-                    link='Link'
-                />
-                <ProductBox
-                    id='2'
-                    brand='Apple'
-                    model='Iphone X'
-                    image='z'
-                    description='description'
-                    link='Link'
-                />
-                <ProductBox
-                    id='2'
-                    brand='Apple'
-                    model='Iphone X'
-                    image='z'
-                    description='description'
-                    link='Link'
-                /> */}
             </div>
         </div>
     )

@@ -40,7 +40,7 @@ export const BackofficeOffers = () => {
     return (
         <Wrapper title={t('offers')}>
             <ColumnWrapper>
-                {arreangedOffer.map((offer, i) => <OfferLine key={i} idSell={offer.idSell} idOffer={offer.idOffer} idUser={offer.idUser} date={offer.dateProposition} price={offer.price} />)}
+                {arreangedOffer.map((offer, i) => <OfferLine key={i} model={offer.modelName} brand={offer.brandName} idSell={offer.idSell} idOffer={offer.idOffer} idUser={offer.idUser} date={offer.dateProposition} price={offer.price} />)}
 
             </ColumnWrapper>
         </Wrapper>

@@ -16,7 +16,7 @@ import {
     ColumnWrapper,
     InlineWrapper,
     Wrapper,
-} from './../../utils/components/wrapper'
+} from '../../utils/components/wrapper'
 import { OfferPDF } from '../../utils/components/pdf'
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { useTranslation } from 'react-i18next'

@@ -24,6 +24,7 @@ import { BackofficeModels } from './backoffice/models'
 import { YourProjects } from "./pages/your_projects";
 import { NewProject } from "./pages/your_projects/new_project";
 import { Validator } from './pages/validator'
+import { ThreeJS } from './utils/components/threeanim'
 
 function App() {
     return (
@@ -39,7 +40,7 @@ function App() {
                     <Route exact path='/validate/:id' component={Validator} />
                     <Route exact path='/products/:search/:id' component={Products} />
                     <Route exact path='/products' component={Products} />
-
+                    <Route exact path='/animation' component={ThreeJS} />
                     <Route exact path='/backoffice/users' component={BackofficeUser} />
                     <Route exact path='/backoffice/offers' component={BackofficeOffers} />
 
