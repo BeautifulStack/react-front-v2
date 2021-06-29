@@ -1,10 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, useRef } from "react";
 import ReactDOM from "react-dom";
 import * as THREE from "three";
 import * as dat from 'dat.gui'
 import gsap from 'gsap'
 
 export class ThreeJS extends Component {
+
     componentDidMount() {
 
 
@@ -86,17 +87,15 @@ export class ThreeJS extends Component {
         scene.add(camera)
 
 
-
-        // Controls
-        // const controls = new OrbitControls(camera, canvas)
-        // controls.enableDamping = true
-
         /**
          * Renderer
          */
-        const renderer = new THREE.WebGLRenderer()
-        document.body.appendChild(renderer.domElement);
-        renderer.domElement.classList.add("threejs")
+        const renderer = new THREE.WebGLRenderer({
+            canvas: canvas
+        })
+
+        // document.body.appendChild(renderer.domElement);
+        // renderer.domElement.classList.add("threejs")
         renderer.setSize(sizes.width, sizes.height)
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
@@ -171,8 +170,17 @@ export class ThreeJS extends Component {
         // === THREE.JS EXAMPLE CODE END ===
     }
     render() {
+
         return (
-            <div style={{ width: '50vw' }} />
+            <div>
+                <div class="webgl-div-title">
+                    <h3 style={{ fontSize: '34px' }}>FairRepack - Smart Shop</h3>
+                    <span style={{ fontSize: '24px', textAlign: 'left' }}>Lorem dqzdqzd qlzdqzdqhjzjhdqhjzd hjqklzdjhkqzhjdjhqjjqjdjzhdkqhzdkjqhzdh qklzhdkjqhzdkljqhzkldqlzhklqzhdlkzhd kqzhdkqjzhdkqzhd</span>
+                </div>
+                <canvas class="webgl">
+
+                </canvas>
+            </div>
         )
     }
 }

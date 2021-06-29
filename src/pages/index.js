@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect } from 'react'
-// import { Button, Icon } from 'semantic-ui-react'
+import { Button, Icon } from 'semantic-ui-react'
 import { GLOBAL } from '../utils/functions/GLOBAL'
-// import background from './../images/Background.webp'
-// import packaging from './../images/packaging.webp'
+import background from './../images/Background.webp'
+import packaging from './../images/packaging.webp'
 import { request } from './../utils/functions/request'
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
@@ -84,7 +84,7 @@ export const Home = () => {
 
     return (
         <div className='home'>
-            {/* <div
+            <div
                 style={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -163,7 +163,7 @@ export const Home = () => {
                         </span>
                     </div>
                 )}
-            </div> */}
+            </div>
             <div className='categoryBrowse'>
                 <div
                     style={{
