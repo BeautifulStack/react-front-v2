@@ -2,7 +2,7 @@
 import { Wrapper, ColumnWrapper, InlineWrapper } from '../utils/components/wrapper'
 import { StyledContainer } from '../utils/components/containers'
 import { Button, Input } from 'semantic-ui-react'
-import { useState } from 'react/cjs/react.development'
+import { useState } from 'react'
 import { request } from '../utils/functions/request'
 import { GLOBAL } from '../utils/functions/GLOBAL'
 

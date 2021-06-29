@@ -1,5 +1,5 @@
 import { useHistory } from 'react-router-dom'
-import { useState } from 'react/cjs/react.development'
+import { useState } from 'react'
 import { Input, Button } from 'semantic-ui-react'
 import { MiddleContainer } from '../../utils/components/containers'
 import { GLOBAL } from '../../utils/functions/GLOBAL'

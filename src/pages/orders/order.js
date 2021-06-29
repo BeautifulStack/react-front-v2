@@ -7,7 +7,7 @@ import { Icon, Button } from 'semantic-ui-react'
 
 import { StyledContainer } from '../../utils/components/containers'
 import { CartLine } from '../cart/cart'
-import { useState, useEffect } from 'react/cjs/react.development'
+import { useState, useEffect } from 'react'
 import { request } from '../../utils/functions/request'
 import { GLOBAL } from '../../utils/functions/GLOBAL'
 import { OrderPDF } from '../../utils/components/pdf'
@@ -97,7 +97,7 @@ export const OrderResume = ({ orderId, products, totalprice, status, shippingAdd
                     Status: <b>{status}</b>
                 </span>
             </InlineWrapper>
-            {products.map(( product ) => (
+            {products.map((product) => (
                 <CartLine
                     model={product.modelName}
                     brand={product.brandName}

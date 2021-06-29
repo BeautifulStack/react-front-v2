@@ -1,5 +1,5 @@
 import { useHistory } from 'react-router'
-import { useState, useEffect } from 'react/cjs/react.development'
+import { useState, useEffect } from 'react'
 import { Input, Button, Checkbox, Select } from 'semantic-ui-react'
 import { MiddleContainer } from '../../utils/components/containers'
 import {

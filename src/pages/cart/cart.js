@@ -17,7 +17,7 @@ import {
 
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
-import { useEffect, useState } from 'react/cjs/react.development'
+import { useEffect, useState } from 'react'
 import { request } from '../../utils/functions/request'
 import { GLOBAL } from '../../utils/functions/GLOBAL'
 import { useHistory } from 'react-router-dom'

@@ -6,7 +6,7 @@ import {
 import { MiddleContainer, StyledContainer } from '../../utils/components/containers'
 
 import QRCode from 'qrcode.react'
-import { useEffect, useState } from 'react/cjs/react.development'
+import { useEffect, useState } from 'react'
 import { request } from '../../utils/functions/request'
 import { GLOBAL } from '../../utils/functions/GLOBAL'
 import { useHistory } from 'react-router-dom'

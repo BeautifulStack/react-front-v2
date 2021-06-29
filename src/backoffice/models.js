@@ -2,21 +2,26 @@
 import { Wrapper, ColumnWrapper, InlineWrapper } from '../utils/components/wrapper'
 import { StyledContainer } from '../utils/components/containers'
 import { Button, Select, Input } from 'semantic-ui-react'
-import { useState, useEffect, useRef } from 'react/cjs/react.development'
+import { useState, useEffect, useRef } from 'react'
 import { request } from '../utils/functions/request'
 import { GLOBAL } from '../utils/functions/GLOBAL'
 import { FileDisplay } from './../pages/sell/index'
+import { useHistory } from 'react-router-dom'
 
 export const BackofficeModels = () => {
     const [models, setModels] = useState([])
     const [clicked, setClicked] = useState(false)
     const [selectedModel, setSelectedModel] = useState(-1)
 
+    const history = useHistory()
+
     const fetchModels = () => {
         setClicked(false)
         request(GLOBAL.URL + '/Model/All', 'GET').then((res) => {
             if (res.status === 201) {
                 setModels(res.models)
+            } else {
+                history.push('/login')
             }
         })
     }
