@@ -247,7 +247,7 @@ export const NewSell = () => {
 
 
     const slide = (e, a) => {
-        const position = (sliderRef.current.scrollTopMax / 2) * e
+        const position = (sliderRef.current.scrollHeight - sliderRef.current.offsetHeight / 2) * e
         setActive(e)
         const newValidate = [...validate]
         newValidate[a] = 1
